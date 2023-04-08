@@ -1,0 +1,58 @@
+'
+<div class="w-100 h-100 p-3">
+  <div class="business-name">{{ name }}</div>
+  <div class="business-address">{{ address }}</div>
+
+  <div class="mt-5">
+    <div class="row" style="display: flex; justify-content: center">
+      <div class="collectibles col-md-6">
+        <div class="round">
+          <span>{{
+            myManoDetails?.collectibles ? myManoDetails?.collectibles : 0
+          }}</span>
+        </div>
+        <div
+          style="justify-content: flex-end; margin-right: 40px"
+          class="label"
+        >
+          Your Collectibles
+        </div>
+      </div>
+
+      <div
+        style="padding-bottom: 50px"
+        *ngIf="!myManoDetails?.isAccountVerified"
+        class="mymano-score col-md-6"
+      >
+        <div class="round">
+          <mat-icon (click)="onVerifyBusinessClick()" class="locked-mano-icon"
+            >lock</mat-icon
+          >
+        </div>
+        <div style="margin-left: 40px; justify-content: start" class="label">
+          Mymano Score
+          <mat-icon (click)="onHelpClick()" class="mymano-question"
+            >help_outline</mat-icon
+          >
+        </div>
+      </div>
+
+      <div
+        *ngIf="myManoDetails?.isAccountVerified"
+        class="mymano-score col-md-6"
+      >
+        <div class="round">
+          <span style="color: white">{{
+            myManoDetails?.myManoScore ? myManoDetails?.myManoScore : "0.0"
+          }}</span>
+        </div>
+        <div style="margin-left: 40px; justify-content: start" class="label">
+          Mymano Score
+          <mat-icon (click)="onHelpClick()" class="mymano-question"
+            >help_outline</mat-icon
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

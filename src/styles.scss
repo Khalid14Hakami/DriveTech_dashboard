@@ -1,0 +1,132 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~ngx-toastr/toastr";
+@import url(assets/theme/light-theme.scss);
+@import url(assets/theme/mobile-view.scss);
+@import url("https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500&display=swap");
+* {
+  font-family: "Albert Sans";
+}
+
+:root {
+  --color-primary: #da2e8b;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.search-cmp {
+  width: 100%;
+}
+
+.password-input {
+  .mat-form-field-wrapper {
+    padding: 0px !important;
+  }
+}
+
+.mat-dialog-container {
+  box-shadow: 0 0 20px #59667a1a;
+  border-radius: 10px;
+}
+
+.lock-tooltip {
+  background: white;
+  color: black !important;
+  font-size: 16px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.select-ingredient {
+  .mat-dialog-container {
+    overflow: hidden !important;
+  }
+}
+
+.no-records {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.mobile {
+  .link {
+    div {
+      font-size: 12px;
+    }
+    button {
+      margin-left: 0px;
+    }
+  }
+  .toolbar-content {
+    padding-left: 10px !important;
+    padding-right: 0px !important;
+
+    .logo {
+      img {
+        width: 35px !important;
+        height: 35px !important;
+        margin-left: 30px;
+      }
+    }
+    .app-name {
+      display: none;
+    }
+  }
+  .settings-container {
+    width: auto !important;
+  }
+  .counter-box {
+    margin-bottom: 10px;
+  }
+
+  .dashboard-main {
+    display: block !important;
+    .collectibles {
+      margin-right: 0px !important;
+      margin-bottom: 10px;
+    }
+  }
+
+  .search-container {
+    padding: 10px !important;
+    .container-text {
+      margin-top: 20px !important;
+      width: 90% !important;
+    }
+    .search-input {
+      width: 90% !important;
+    }
+  }
+
+  .login-card {
+    max-width: 90% !important;
+  }
+  .business-name {
+    line-height: 30px;
+  }
+
+  .round {
+    margin: auto !important;
+  }
+  .label {
+    justify-content: center !important;
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+  }
+
+  .footer {
+    .row {
+      div.col-md-9 {
+        padding-left: 0px !important;
+      }
+    }
+  }
+}

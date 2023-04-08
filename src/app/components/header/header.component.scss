@@ -1,0 +1,17 @@
+.logo {
+  cursor: pointer;
+}
+
+.loader {
+  position: absolute;
+  width: 100%;
+  top: 95px;
+  z-index: 9999999;
+  mat-spinner {
+    width: 30px;
+    height: 30px;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+}

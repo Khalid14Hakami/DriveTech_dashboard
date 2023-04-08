@@ -1,0 +1,22 @@
+.close {
+  width: 24px;
+  height: 24px;
+  &:hover {
+    cursor: pointer;
+  }
+
+  mat-icon {
+    margin-left: 140px;
+  }
+}
+
+.label {
+  font-size: 16px;
+}
+
+.create-account-btn {
+  width: 50%;
+  background: var(--color-primary);
+  color: white;
+  height: 40px;
+}

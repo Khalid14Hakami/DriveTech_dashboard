@@ -1,0 +1,40 @@
+.counter-box {
+  display: block;
+  background: #f5edf2;
+  padding: 40px 20px 37px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.counter-box p {
+  margin: 10px 0 0;
+  padding: 0;
+  color: black;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.counter-box mat-icon {
+  width: 35px;
+  height: 35px;
+  font-size: 35px;
+  color: var(--color-primary);
+}
+
+.counter {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  color: #666;
+  line-height: 28px;
+}
+
+.counter-box.colored {
+  background: #3acf87;
+}
+
+.counter-box.colored p,
+.counter-box.colored i,
+.counter-box.colored .counter {
+  color: #fff;
+}

@@ -1,0 +1,138 @@
+<mat-toolbar>
+  <div class="toolbar-content">
+    <button
+      *ngIf="
+        user &&
+        (currentRoute.includes('business') || currentRoute.includes('admin'))
+      "
+      style="outline: none; position: absolute; left: 15px; z-index: 999"
+      mat-icon-button
+    >
+      <mat-icon (click)="toggle()">{{
+        isOpened ? "menu_open" : "menu"
+      }}</mat-icon>
+    </button>
+    <div class="logo" (click)="onLogoClick()">
+      <img src="assets/logo/Mymano_icon.png" alt="My Mano" />
+      <span class="app-name"> Mymano for Business </span>
+    </div>
+    <div
+      *ngIf="
+        (currentRoute === '/login' || currentRoute === '/forgot-password') &&
+        !user
+      "
+      class="link"
+    >
+      <button (click)="onSearchClick()" mat-button>Search Business</button>
+    </div>
+
+    <div
+      *ngIf="
+        currentRoute === '/search' &&
+        !currentRoute.includes('business') &&
+        !currentRoute.includes('account') &&
+        !currentRoute.includes('admin')
+      "
+      class="link"
+    >
+      <button (click)="onLoginClick()" mat-button>Login</button>
+    </div>
+
+    <div
+      *ngIf="
+        currentRoute.includes('/account') ||
+        (currentRoute == '/about-us' && !user) ||
+        (currentRoute == '/contact-us' && !user) ||
+        (currentRoute == '/privacy-policy' && !user)
+      "
+      class="link"
+    >
+      <button (click)="onSearchClick()" mat-button>Search</button>
+    </div>
+    <div
+      *ngIf="
+        currentRoute.includes('account') &&
+        businessDetail?.details?.isAccountVerified
+      "
+      class="link"
+      style="margin-left: 5px"
+    >
+      <button (click)="onLoginClick()" mat-button>Login</button>
+    </div>
+
+    <div
+      *ngIf="
+        currentRoute.includes('/account') &&
+        !businessDetail?.details?.isAccountVerified
+      "
+      class="link"
+      style="margin-left: 5px"
+    >
+      <button (click)="onVerifyBusinessClick()" mat-button>
+        Verify Business
+      </button>
+    </div>
+    <div
+      *ngIf="
+        user &&
+        (currentRoute.includes('business') || currentRoute.includes('admin'))
+      "
+      style="display: flex; align-items: center; font-size: 16px"
+      class="link"
+    >
+      <mat-icon>person</mat-icon>
+      <div
+        *ngIf="user?.UserTypeId == userType.BusinessAdmin"
+        style="margin-left: 10px"
+        class="ml-2"
+      >
+        {{ user?.BusinessName }}
+      </div>
+      <div
+        *ngIf="user?.UserTypeId == userType.SuperAdmin"
+        style="margin-left: 10px"
+        class="ml-2"
+      >
+        {{ user?.Name }}
+      </div>
+      <button
+        mat-icon-button
+        style="margin-left: 5px"
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu"
+      >
+        <mat-icon style="color: var(--color-primary)"
+          >expand_circle_down</mat-icon
+        >
+      </button>
+      <mat-menu #menu="matMenu">
+        <div style="width: 185px">
+          <button
+            *ngIf="user.UserTypeId === userType.BusinessAdmin"
+            (click)="onProfileClick()"
+            mat-menu-item
+          >
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+          </button>
+          <button
+            *ngIf="user.UserTypeId === userType.BusinessAdmin"
+            (click)="onSettingsClick()"
+            mat-menu-item
+          >
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+          <button (click)="onLogoutClick()" mat-menu-item>
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </div>
+      </mat-menu>
+    </div>
+  </div>
+</mat-toolbar>
+<div *ngIf="showLoader" class="loader">
+  <mat-progress-bar style="width: 100%" mode="indeterminate"></mat-progress-bar>
+  <mat-spinner diameter="30"></mat-spinner>
+</div>

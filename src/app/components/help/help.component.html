@@ -1,0 +1,91 @@
+<h2 *ngIf="type == 'mymano-score'" mat-dialog-title>What is Mymano Score?</h2>
+<div class="w-100 h-100">
+  <div *ngIf="type == 'mymano-score'">
+    <div>
+      Mymano has a bubble rating system from one-seven, and every app user that
+      submits a score can rate your dishes accordingly.
+    </div>
+
+    <div class="mt-2">
+      Your score is the average of this bubble rating system:
+    </div>
+
+    <div class="mt-2">
+      <!-- <div class="color-bar">
+        <div class="box">
+          <div class="color-box" id="gray"></div>
+          <div class="text-center rate">1</div>
+        </div>
+        <div class="box">
+          <div class="color-box" id="gold"></div>
+          <div class="text-center rate">2</div>
+        </div>
+        <div class="box">
+          <div class="color-box" id="yellow"></div>
+          <div class="text-center rate">3</div>
+        </div>
+        <div class="box">
+          <div class="color-box" id="white"></div>
+          <div class="text-center rate">4</div>
+        </div>
+        <div class="box">
+          <div class="color-box" id="green"></div>
+          <div class="text-center rate">5</div>
+        </div>
+        <div class="box">
+          <div class="color-box" id="lightpink"></div>
+          <div class="text-center rate">6</div>
+        </div>
+
+        <div class="box">
+          <div class="color-box" id="pink"></div>
+          <div class="text-center rate">7</div>
+        </div>
+      </div> -->
+
+      <div style="justify-content: center" class="col-md-12 d-flex">
+        <div class="color-bar">
+          <div *ngFor="let r of ratingBubbles" class="box">
+            <div
+              class="color-box"
+              [ngStyle]="{ 'background-color': r?.colorCode }"
+            ></div>
+            <div class="text-center rate">{{ r?.value }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-3">
+      <ul>
+        <li>
+          <div class="d-flex">
+            <div style="width: 150px">
+              <b style="margin-right: 10px; width: 100px">Bubbles 1 to 3:</b>
+            </div>
+            <div>unsatisfactory taste</div>
+          </div>
+        </li>
+        <li>
+          <div class="d-flex">
+            <div style="width: 150px">
+              <b style="margin-right: 10px; width: 100px">Bubbles 4:</b>
+            </div>
+            <div>neutral taste</div>
+          </div>
+        </li>
+        <li>
+          <div class="d-flex">
+            <div style="width: 150px">
+              <b style="margin-right: 10px; width: 100px">Bubbles 5 to 7:</b>
+            </div>
+            <div>satisfactory taste</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

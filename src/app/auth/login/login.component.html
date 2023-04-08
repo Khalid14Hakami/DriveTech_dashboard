@@ -1,0 +1,50 @@
+<div class="w-100 h-100">
+  <div class="login-card">
+    <div class="sign-in-label">Sign In</div>
+    <div class="mt-4">
+      <mat-form-field color="accent" class="w-100" appearance="outline">
+        <mat-label style="margin-left: 10px; font-size: 13px"
+          >Enter Email</mat-label
+        >
+        <input [(ngModel)]="email" matInput placeholder="Placeholder" />
+        <mat-icon matPrefix>mail_outline</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="mt-2">
+      <mat-form-field
+        color="accent"
+        class="w-100 password-input"
+        appearance="outline"
+      >
+        <mat-label style="margin-left: 10px; font-size: 13px"
+          >Enter Password</mat-label
+        >
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          [(ngModel)]="password"
+          matInput
+          placeholder="Placeholder"
+        />
+        <mat-icon matPrefix>lock</mat-icon>
+        <mat-icon (click)="showPassword = !showPassword" matSuffix>{{
+          showPassword ? "visibility" : "visibility_off"
+        }}</mat-icon>
+      </mat-form-field>
+    </div>
+    <div style="text-align: end">
+      <span (click)="onForgotPasswordClick()" class="forgot-password"
+        >Forgot password ?</span
+      >
+    </div>
+    <div class="mt-4">
+      <button
+        [disabled]="showLoader"
+        (click)="onLoginClick()"
+        class="sign-in-button"
+        mat-flat-button
+      >
+        <div>Sign In</div>
+      </button>
+    </div>
+  </div>
+</div>

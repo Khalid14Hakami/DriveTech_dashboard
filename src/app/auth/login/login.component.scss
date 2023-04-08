@@ -1,0 +1,33 @@
+.login-card {
+  box-shadow: 0 0 20px #59667a1a;
+  max-width: 37%;
+  margin: auto;
+  margin-top: 7%;
+  padding: 40px;
+  border-radius: 8px;
+}
+
+.sign-in-label {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 500;
+  color: var(--color-primary);
+  letter-spacing: 1.1px;
+}
+
+.sign-in-button {
+  width: 100%;
+  background: var(--color-primary);
+  color: white;
+  height: 50px;
+}
+
+.forgot-password {
+  cursor: pointer;
+
+  font-size: 13px;
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}

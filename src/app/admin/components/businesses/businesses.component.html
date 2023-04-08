@@ -1,0 +1,136 @@
+<div class="w-100 px-4 py-3">
+  <!-- <div class="row m-0 w-100 mt-2">
+    <div class="col-md-3 p-0">
+      <mat-form-field color="accent" class="searchbar" appearance="outline">
+        <mat-label>Search</mat-label>
+        <input matInput placeholder="Start typing..." />
+      </mat-form-field>
+    </div>
+    <div class="col-md-3 p-0">
+      <mat-form-field class="dropdown" color="accent" appearance="outline">
+        <mat-label>City</mat-label>
+        <mat-select>
+          <mat-option selected value="option1">Ontario</mat-option>
+          <mat-option value="option2"> Toronto </mat-option>
+          <mat-option value="option3">Queback</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-3 p-0">
+      <mat-form-field class="dropdown" color="accent" appearance="outline">
+        <mat-label>Country</mat-label>
+        <mat-select>
+          <mat-option selected value="option1">UK</mat-option>
+          <mat-option value="option2"> Canada </mat-option>
+          <mat-option value="option3">Australia</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-3 p-0">
+      <mat-form-field class="dropdown" color="accent" appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select>
+          <mat-option selected value="option1">All</mat-option>
+          <mat-option value="option2"> Active </mat-option>
+          <mat-option value="option3">Pending</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div> -->
+
+  <div class="w-100">
+    <!-- <mat-form-field  class="mr-3" color="accent" appearance="outline">
+      <mat-icon matPrefix>search</mat-icon>
+      <mat-label>Search</mat-label>
+      <input
+        [(ngModel)]="search"
+        (ngModelChange)="onSearch($event)"
+        matInput
+        placeholder="Search"
+      />
+    </mat-form-field> -->
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select
+        (ngModelChange)="onStatusChange($event)"
+        [(ngModel)]="selectedStatus"
+      >
+        <mat-option value="all">All</mat-option>
+        <mat-option value="Verified">Verified</mat-option>
+        <mat-option value="Unverified">Unverified</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field style="margin-left: 20px" appearance="outline">
+      <mat-label>City</mat-label>
+      <mat-select
+        (ngModelChange)="onCityChange($event)"
+        [(ngModel)]="selectedCity"
+      >
+        <mat-option value="all">All</mat-option>
+        <mat-option *ngFor="let c of cities" [value]="c">{{ c }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field style="margin-left: 20px" appearance="outline">
+      <mat-label>Country</mat-label>
+      <mat-select
+        (ngModelChange)="onCountryChange($event)"
+        [(ngModel)]="selectedCountry"
+      >
+        <mat-option value="all">All</mat-option>
+        <mat-option *ngFor="let c of countries" [value]="c">{{ c }}</mat-option>
+      </mat-select> </mat-form-field
+    ><!-- -->
+  </div>
+  <div class="row m-0 w-100 mt-2 p-0">
+    <table style="width: 100%" mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="establishment">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td class="first-column-td" mat-cell *matCellDef="let element">
+          {{ element?.establishment }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef>City</th>
+        <td mat-cell *matCellDef="let element">{{ element?.city }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef>Country</th>
+        <td mat-cell *matCellDef="let element">{{ element?.country }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.isVerified ? "Verified" : "Unverified" }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="d-inline-flex m-2">
+            <a
+              *ngIf="!element?.isVerified"
+              class="invite-add"
+              (click)="onInviteOrAddClick(element)"
+              >Invite</a
+            >
+
+            <a
+              *ngIf="element?.isVerified"
+              class="invite-add"
+              (click)="onAddMenuClick(element)"
+              >Add Menu Item</a
+            >
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+.color-bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  .color-box {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 0.5px solid darkgrey;
+    margin: 5px;
+  }
+
+  .box {
+    &:hover {
+      cursor: pointer;
+      .rate {
+        visibility: visible;
+      }
+    }
+  }
+
+  li {
+    display: flex;
+  }
+
+  #gray {
+    background-color: gray;
+  }
+  #lightpink {
+    background-color: pink;
+  }
+  #pink {
+    background-color: palevioletred;
+  }
+  #gold {
+    background-color: gold;
+  }
+  #yellow {
+    background-color: yellow;
+  }
+  #green {
+    background-color: green;
+  }
+  #white {
+    background-color: white;
+  }
+}

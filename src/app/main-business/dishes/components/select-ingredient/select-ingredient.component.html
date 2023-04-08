@@ -1,0 +1,88 @@
+<div class="w-100 h-100">
+  <div class="row align-items-center justify-content-between m-0 w-100 mb-4">
+    <div class="text-left col-md-8 h5 m-0">Select Ingredients</div>
+    <div
+      (click)="dialog.closeAll()"
+      class="d-flex close-btn justify-content-end col-md-4"
+    >
+      <mat-icon>close</mat-icon>
+    </div>
+  </div>
+
+  <div class="row align-items-center m-0 w-100 mt-3">
+    <div style="height: 20%" class="col-md-4">
+      <mat-form-field
+        color="accent"
+        class="searchbar w-100"
+        appearance="outline"
+      >
+        <input
+          [(ngModel)]="search"
+          (ngModelChange)="onSearch($event)"
+          matInput
+          placeholder="Search"
+        />
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="byUserSelectedIngredient.length" class="col-md-8">
+      <mat-form-field class="w-100 chipbox" appearance="outline">
+        <mat-chip-list #chipList>
+          <mat-chip
+            *ngFor="let item of byUserSelectedIngredient"
+            (removed)="remove(item)"
+          >
+            {{ item.name }}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        </mat-chip-list>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="false" class="row justify-content-center m-0 w-100 mt-5">
+      <div
+        class="d-flex justify-content-center align-items-center col-md-8 mx-2 my-3"
+      >
+        <mat-form-field
+          color="accent"
+          class="add-ingredeint"
+          appearance="outline"
+        >
+          <mat-label>Add New Ingredient</mat-label>
+          <input matInput />
+        </mat-form-field>
+        <div class="add-icon d-inline-flex mx-2">
+          <mat-icon>add</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    [ngStyle]="
+      ingredientsCopy.length > 42 ? { height: '70%' } : { height: 'auto' }
+    "
+    style="overflow: auto; height: 70%"
+    class="row m-0 w-100 mt-4"
+  >
+    <div class="col-md-4 mb-2" *ngFor="let ingredient of ingredientsCopy">
+      <mat-checkbox
+        (change)="onIngredientSelected($event, ingredient)"
+        [(ngModel)]="ingredient.selected"
+      >
+        {{ ingredient.name }}
+      </mat-checkbox>
+    </div>
+  </div>
+
+  <div
+    style="text-align: center; background: white; position: sticky; bottom: 0px"
+  >
+    <button (click)="onSaveClick()" class="save-btn" mat-flat-button>
+      Save
+    </button>
+  </div>
+</div>

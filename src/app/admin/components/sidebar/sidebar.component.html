@@ -1,0 +1,80 @@
+<div style="width: 200px">
+  <div class="navigation-items">
+    <div class="item">
+      <a
+        [routerLink]="['/admin/dashboard']"
+        routerLinkActive="router-link-active"
+        class="item-link"
+      >
+        <mat-icon>home</mat-icon> Dashboard
+      </a>
+    </div>
+
+    <div class="item">
+      <a
+        [routerLink]="['/admin/businesses']"
+        routerLinkActive="router-link-active"
+        class="item-link"
+      >
+        <mat-icon>restaurant</mat-icon> Businesses
+      </a>
+    </div>
+
+    <div class="item">
+      <a
+        [routerLink]="['/admin/producers']"
+        routerLinkActive="router-link-active"
+        class="item-link"
+      >
+        <mat-icon>person</mat-icon> Producers
+      </a>
+    </div>
+
+    <div class="item">
+      <a
+        [routerLink]="['/admin/reported-dishes']"
+        routerLinkActive="router-link-active"
+        class="item-link"
+      >
+        <mat-icon>person</mat-icon> Reported Dishes
+      </a>
+    </div>
+  </div>
+
+  <div
+    style="position: absolute; width: 100%; bottom: 0px"
+    class="navigation-items"
+  >
+    <div class="item">
+      <a
+        [routerLink]="['/admin/about-us']"
+        routerLinkActive="router-link-active"
+        class="item-link"
+      >
+        About Us
+      </a>
+    </div>
+
+    <div class="item">
+      <a
+        [routerLink]="['/admin/contact-us']"
+        routerLinkActive="router-link-active"
+        class="item-link"
+      >
+        Contact Us
+      </a>
+    </div>
+
+    <div class="item">
+      <a
+        [routerLink]="['/admin/privacy-policy']"
+        routerLinkActive="router-link-active"
+        class="item-link"
+      >
+        Terms of Use
+      </a>
+    </div>
+
+    <div style="text-align: start; margin-left: 20px">@2022, Mymano</div>
+  </div>
+</div>

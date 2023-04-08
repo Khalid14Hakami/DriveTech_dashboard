@@ -1,0 +1,41 @@
+.searchbar {
+  ::ng-deep .mat-input-element {
+    margin-bottom: 1.5px;
+  }
+}
+
+table {
+  margin: auto;
+  width: 100%;
+  border: 1px solid darkgray;
+  .first-column-td {
+    text-align: center;
+  }
+}
+
+th {
+  text-align: center !important;
+  padding-left: 0px !important;
+  font-weight: 500;
+  color: black;
+  font-size: 14px;
+}
+
+td {
+  padding: 5px 10px !important;
+}
+
+table,
+th,
+td {
+  border-bottom: 1px solid darkgray;
+  border-top: 1px solid darkgray;
+  border-collapse: collapse;
+  text-align: center !important;
+}
+
+.invite-add {
+  &:hover {
+    cursor: pointer;
+  }
+}
