@@ -71,6 +71,6 @@ export class AuthServiceService {
   async logout() {
     this.currentUserSubject.next(null);
     localStorage.removeItem('cupv_');
-    this.router.navigateByUrl('login');
+    this.router.navigateByUrl('search');
   }
 }

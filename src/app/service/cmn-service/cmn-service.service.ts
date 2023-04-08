@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
-import { HelpComponent } from 'src/app/components/help/help.component';
 
 @Injectable({
   providedIn: 'root',
@@ -28,12 +27,6 @@ export class CmnServiceService {
 
   showWarning(res: string) {
     this.toastr.warning('Warning', res);
-  }
-
-  showHelpDialog(type: string) {
-    this.matDialog.open(HelpComponent, {
-      data: type,
-    });
   }
 
   preventBackButton() {

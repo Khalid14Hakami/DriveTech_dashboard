@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { HeaderComponent } from '../components/header/header.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @Component({
   selector: 'app-admin',

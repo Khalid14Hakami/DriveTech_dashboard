@@ -9,18 +9,30 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorInterceptor } from './interceptors/http-interceptor.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { LoginComponent } from './auth/login/login.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoginComponent, ForgotPasswordComponent],
   imports: [
     GooglePlaceModule,
     BrowserModule,
     AppRoutingModule,
+    MatFormFieldModule,
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     GooglePlaceModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatDialogModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   providers: [
     {

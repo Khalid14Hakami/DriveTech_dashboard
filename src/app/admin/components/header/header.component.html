@@ -1,0 +1,47 @@
+<mat-toolbar>
+  <div class="toolbar-content">
+    <button
+      style="outline: none; position: absolute; left: 15px; z-index: 999"
+      mat-icon-button
+    >
+      <mat-icon (click)="toggle()">{{
+        isOpened ? "menu_open" : "menu"
+      }}</mat-icon>
+    </button>
+    <div class="logo">
+      <img src="assets/logo/Mymano_icon.png" alt="Drive Tech" />
+      <span class="app-name"> DriveTech</span>
+    </div>
+
+    <div
+      style="display: flex; align-items: center; font-size: 16px"
+      class="link"
+    >
+      <mat-icon>person</mat-icon>
+      <div style="margin-left: 10px" class="ml-2">Jainik Patel</div>
+
+      <button
+        mat-icon-button
+        style="margin-left: 5px"
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu"
+      >
+        <mat-icon style="color: var(--color-primary)"
+          >expand_circle_down</mat-icon
+        >
+      </button>
+      <mat-menu #menu="matMenu">
+        <div style="width: 185px">
+          <button (click)="onLogoutClick()" mat-menu-item>
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </div>
+      </mat-menu>
+    </div>
+  </div>
+</mat-toolbar>
+<div *ngIf="showLoader" class="loader">
+  <mat-progress-bar style="width: 100%" mode="indeterminate"></mat-progress-bar>
+  <mat-spinner diameter="30"></mat-spinner>
+</div>

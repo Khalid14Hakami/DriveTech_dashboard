@@ -1,0 +1,61 @@
+<div>
+  <div class="d-flex align-items-center p-5 justify-content-between">
+    <div><h1 class="m-0">Storage List</h1></div>
+    <div class="d-flex justify-content-end">
+      <button color="primary" (click)="onCreateStorage()" mat-raised-button>
+        Create new Storage
+      </button>
+    </div>
+  </div>
+
+  <div class="px-5">
+    <table
+      style="width: 100%"
+      mat-table
+      [dataSource]="dataSource"
+      class="border"
+    >
+      <!-- Name Column -->
+      <ng-container matColumnDef="stored">
+        <th mat-header-cell *matHeaderCellDef>Storage ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.strg_id }}</td>
+      </ng-container>
+
+      <!-- Location Column -->
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef>Location</th>
+        <td mat-cell *matCellDef="let element">{{ element.location }}</td>
+      </ng-container>
+
+      <!-- Stored Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <!-- Available Column -->
+      <ng-container matColumnDef="available">
+        <th mat-header-cell *matHeaderCellDef>Phone Number</th>
+        <td mat-cell *matCellDef="let element">{{ element.Phone }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="proponet">
+        <th mat-header-cell *matHeaderCellDef>Proponent</th>
+        <td mat-cell *matCellDef="let element">{{ element.proponent }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element; let index">
+          <mat-icon (click)="onEditData(index)">edit_outline</mat-icon>
+          <mat-icon class="px-3" (click)="onRemoveData(index)"
+            >delete_outline</mat-icon
+          >
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>

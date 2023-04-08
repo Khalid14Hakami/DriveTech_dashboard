@@ -3,6 +3,7 @@
 @import url(assets/theme/light-theme.scss);
 @import url(assets/theme/mobile-view.scss);
 @import url("https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500&display=swap");
+
 * {
   font-family: "Albert Sans";
 }
@@ -15,6 +16,7 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -61,10 +63,12 @@ body {
     div {
       font-size: 12px;
     }
+
     button {
       margin-left: 0px;
     }
   }
+
   .toolbar-content {
     padding-left: 10px !important;
     padding-right: 0px !important;
@@ -76,19 +80,23 @@ body {
         margin-left: 30px;
       }
     }
+
     .app-name {
       display: none;
     }
   }
+
   .settings-container {
     width: auto !important;
   }
+
   .counter-box {
     margin-bottom: 10px;
   }
 
   .dashboard-main {
     display: block !important;
+
     .collectibles {
       margin-right: 0px !important;
       margin-bottom: 10px;
@@ -97,10 +105,12 @@ body {
 
   .search-container {
     padding: 10px !important;
+
     .container-text {
       margin-top: 20px !important;
       width: 90% !important;
     }
+
     .search-input {
       width: 90% !important;
     }
@@ -109,6 +119,7 @@ body {
   .login-card {
     max-width: 90% !important;
   }
+
   .business-name {
     line-height: 30px;
   }
@@ -116,6 +127,7 @@ body {
   .round {
     margin: auto !important;
   }
+
   .label {
     justify-content: center !important;
     margin-right: 0px !important;
@@ -129,4 +141,9 @@ body {
       }
     }
   }
+}
+
+.mat-header-cell {
+  font-size: 18px;
+  font-weight: 700;
 }

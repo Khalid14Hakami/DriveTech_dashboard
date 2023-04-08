@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AboutUsComponent } from '../components/about-us/about-us.component';
-import { ContactUsComponent } from '../components/contact-us/contact-us.component';
-import { PrivacyPolicyComponent } from '../components/privacy-policy/privacy-policy.component';
-import { DashboardComponent } from '../main-business/dashboard/dashboard.component';
-import { ProducersComponent } from '../main-business/producers/producers.component';
+
 import { AdminComponent } from './admin.component';
-import { BusinessesComponent } from './components/businesses/businesses.component';
-import { ReportedDishesComponent } from './components/reported-dishes/reported-dishes.component';
+import { CreateNewStorageComponent } from './components/create-new-storage/create-new-storage.component';
+import { StorageManagementComponent } from './components/storage-management/storage-management.component';
+import { TaskManagementComponent } from './components/task-management/task-management.component';
+import { CreateTaskComponent } from './components/create-task/create-task.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -23,33 +22,22 @@ const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent,
       },
+
       {
-        path: 'businesses',
-        component: BusinessesComponent,
+        path: 'storage-management',
+        component: StorageManagementComponent,
       },
       {
-        path: 'businesses/:status',
-        component: BusinessesComponent,
+        path: 'createNewStorage',
+        component: CreateNewStorageComponent,
       },
       {
-        path: 'producers',
-        component: ProducersComponent,
+        path: 'task-management',
+        component: TaskManagementComponent,
       },
       {
-        path: 'about-us',
-        component: AboutUsComponent,
-      },
-      {
-        path: 'contact-us',
-        component: ContactUsComponent,
-      },
-      {
-        path: 'privacy-policy',
-        component: PrivacyPolicyComponent,
-      },
-      {
-        path: 'reported-dishes',
-        component: ReportedDishesComponent,
+        path: 'create-task',
+        component: CreateTaskComponent,
       },
     ],
   },
