@@ -39,25 +39,22 @@ export class LoginComponent implements OnInit {
       email: this.email,
       password: this.password,
     };
-    this.cmnService.showLoader();
-    this.showLoader = true;
+    //this.cmnService.showLoader();
+    this.router.navigateByUrl('admin');
+    // this.showLoader = true;
 
-    this.authService.login(data).subscribe(
-      (res: any) => {
-        this.showLoader = false;
+    // this.authService.login(data).subscribe(
+    //   (res: any) => {
+    //     this.showLoader = false;
 
-        if (res?.UserTypeId === UserType.BusinessAdmin) {
-          this.router.navigateByUrl('business');
-        } else if (res?.UserTypeId === UserType.SuperAdmin) {
-          this.router.navigateByUrl('admin');
-        }
+    //     this.router.navigateByUrl('admin');
 
-        this.cmnService.hideLoader();
-      },
-      (err) => {
-        this.showLoader = false;
-        this.cmnService.hideLoader();
-      }
-    );
+    //     this.cmnService.hideLoader();
+    //   },
+    //   (err) => {
+    //     this.showLoader = false;
+    //     this.cmnService.hideLoader();
+    //   }
+    // );
   }
 }

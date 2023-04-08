@@ -11,7 +11,7 @@ import { CmnServiceService } from './service/cmn-service/cmn-service.service';
   },
 })
 export class AppComponent {
-  title = 'my-mano';
+  title = 'drivetech';
   constructor(public cmnService: CmnServiceService) {
     this.cmnService.checkDeviceTypeAndSetValue(window.innerWidth);
   }

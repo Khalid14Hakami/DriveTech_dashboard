@@ -7,7 +7,7 @@ import { ApiService } from 'src/app/service/api-service/api.service';
 
 export interface PeriodicElement {
   name: string;
-  stored: number;
+  strg_id: number;
   available: number;
   location: string;
   proponet: string;
@@ -24,7 +24,6 @@ const ELEMENT_DATA = [];
 export class StorageManagementComponent implements OnInit {
   table: any;
   PeriodicElement: any;
-  storageData: any;
   constructor(
     private dialog: MatDialog,
     private router: Router,
@@ -32,26 +31,25 @@ export class StorageManagementComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getData();
+    this.storageData();
   }
 
   displayedColumns: string[] = [
     'name',
     'location',
-    'stored',
+    'strg_id',
     'available',
     'proponet',
     'action',
   ];
   dataSource = [...ELEMENT_DATA];
 
-  onEditData(index: number) {
-    console.log('Edit element:', index);
+  onEditData(element) {
+    this.apiService.onEditStorage(element);
     this.router.navigate(['admin/createNewStorage']);
   }
 
   onRemoveData(index: any) {
-    // TODO: implement delete logic
     console.log('Delete element:', index);
 
     if (confirm('Are you sure?')) {
@@ -64,10 +62,15 @@ export class StorageManagementComponent implements OnInit {
     this.router.navigate(['admin/createNewStorage']);
   }
 
-  getData() {
-    this.apiService.getData().subscribe((res: any) => {
+  storageData() {
+    this.apiService.getStorageData().subscribe((res: any) => {
       this.dataSource = res;
       console.log('Get Data', res);
     });
+  }
+
+  onStorageDetail(element) {
+    console.log(element);
+    this.router.navigate(['admin/storageDetail']);
   }
 }

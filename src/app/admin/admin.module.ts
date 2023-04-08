@@ -27,27 +27,37 @@ import { CreateNewStorageComponent } from './components/create-new-storage/creat
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TaskManagementComponent } from './components/task-management/task-management.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
-import { HeaderComponent } from './components/header/header.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HeaderComponent } from './components/header/header.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { UserManagementComponent } from './components/user-management/user-management.component';
+import { CreateUserComponent } from './components/create-user/create-user.component';
+import { MatCardModule } from '@angular/material/card';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { NgChartsModule } from 'ng2-charts';
+import { StorageDetailsComponent } from './components/storage-details/storage-details.component';
+import { CreateRoutineComponent } from './components/create-routine/create-routine.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
     SidebarComponent,
-
+    HeaderComponent,
     StorageManagementComponent,
-
+    UserManagementComponent,
     CreateNewStorageComponent,
     TaskManagementComponent,
     CreateTaskComponent,
-    HeaderComponent,
+    CreateUserComponent,
+    DashboardComponent,
+    StorageDetailsComponent,
+    CreateRoutineComponent,
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     HttpClientModule,
-    FormsModule,
+    MatFormFieldModule,
     MatMenuModule,
     MatSidenavModule,
     MatProgressBarModule,
@@ -68,6 +78,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
+    MatProgressBarModule,
+    MatCardModule,
+    NgChartsModule,
   ],
 })
 export class AdminModule {}

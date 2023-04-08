@@ -1,86 +1,95 @@
 <div class="w-100 p-3">
-  <div
-    style="padding-top: 10px !important; background-color: white"
-    class="row m-0 w-100 mt-2 border rounded"
-  >
-    <h2>Task List</h2>
-    <div class="container d-inline-flex">
-      <div class="search col-md-10">
-        <mat-form-field appearance="outline" class="w-25">
-          <mat-icon matPrefix>search</mat-icon>
-          <input matInput placeholder="search" />
-        </mat-form-field>
+  <mat-card>
+    <div
+      style="padding-top: 10px !important; background-color: white"
+      class="row m-0 w-100 mt-2"
+    >
+      <h2>Task List</h2>
+      <div class="container d-inline-flex">
+        <div class="search col-md-10">
+          <mat-form-field appearance="outline" class="w-25">
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput placeholder="search" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <button mat-raised-button color="primary" (click)="onCreateNewTask()">
+            Create New task
+          </button>
+        </div>
       </div>
-      <div class="col-md-2">
-        <button mat-raised-button color="primary" (click)="onCreateNewTask()">
-          Create New task
-        </button>
-      </div>
-    </div>
-    <div class="container mt-3 mb-3">
-      <table
-        *ngIf="dataSource.length > 0"
-        mat-table
-        [dataSource]="dataSource"
-        class="w-100 border"
-      >
-        <ng-container matColumnDef="name">
-          <th mat-header-cell class="font-weight-bold" *matHeaderCellDef>
-            Name
-          </th>
-          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-        </ng-container>
+      <div class="container mt-3 mb-3">
+        <table
+          *ngIf="dataSource.length > 0"
+          mat-table
+          [dataSource]="dataSource"
+          class="w-100 border"
+        >
+          <ng-container matColumnDef="name">
+            <th mat-header-cell class="font-weight-bold" *matHeaderCellDef>
+              Name
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          </ng-container>
 
-        <ng-container matColumnDef="type">
-          <th mat-header-cell *matHeaderCellDef>Type</th>
-          <td mat-cell *matCellDef="let element">{{ element.type }}</td>
-        </ng-container>
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef>Type</th>
+            <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+          </ng-container>
 
-        <ng-container matColumnDef="repetition">
-          <th mat-header-cell *matHeaderCellDef>Repetition</th>
-          <td mat-cell *matCellDef="let element">{{ element.repetition }}</td>
-        </ng-container>
+          <ng-container matColumnDef="repetition">
+            <th mat-header-cell *matHeaderCellDef>Repetition</th>
+            <td mat-cell *matCellDef="let element">{{ element.repetition }}</td>
+          </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div>
-  </div>
-  <div
-    style="background-color: white"
-    class="row m-0 w-100 mt-5 p-2 border rounded"
-  >
-    <h2>Routine List</h2>
-    <div class="container d-inline-flex">
-      <div class="search col-md-10">
-        <mat-form-field appearance="outline" class="w-25">
-          <mat-icon matPrefix>search</mat-icon>
-          <input matInput placeholder="search" />
-        </mat-form-field>
-      </div>
-      <div class="col-md-2">
-        <button mat-raised-button color="primary">Create New Routine</button>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
       </div>
     </div>
-    <div class="container mt-3">
-      <table
-        *ngIf="routineSourse.length > 0"
-        mat-table
-        [dataSource]="routineSourse"
-        class="w-100 border"
-      >
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-        </ng-container>
-        <ng-container matColumnDef="model">
-          <th mat-header-cell *matHeaderCellDef>Model</th>
-          <td mat-cell *matCellDef="let element">{{ element.model }}</td>
-        </ng-container>
+  </mat-card>
+  <div class="pt-3">
+    <mat-card>
+      <div style="background-color: white" class="row m-0 w-100 p-2">
+        <h2>Routine List</h2>
+        <div class="container d-inline-flex">
+          <div class="search col-md-10">
+            <mat-form-field appearance="outline" class="w-25">
+              <mat-icon matPrefix>search</mat-icon>
+              <input matInput placeholder="search" />
+            </mat-form-field>
+          </div>
+          <div class="col-md-2">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="onCreateNewRoutine()"
+            >
+              Create New Routine
+            </button>
+          </div>
+        </div>
+        <div class="container mt-3">
+          <table
+            *ngIf="routineSourse.length > 0"
+            mat-table
+            [dataSource]="routineSourse"
+            class="w-100 border"
+          >
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="model">
+              <th mat-header-cell *matHeaderCellDef>Model</th>
+              <td mat-cell *matCellDef="let element">{{ element.model }}</td>
+            </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="routineColums"></tr>
-        <tr mat-row *matRowDef="let row; columns: routineColums"></tr>
-      </table>
-    </div>
+            <tr mat-header-row *matHeaderRowDef="routineColums"></tr>
+            <tr mat-row *matRowDef="let row; columns: routineColums"></tr>
+          </table>
+        </div>
+      </div>
+    </mat-card>
   </div>
 </div>

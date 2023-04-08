@@ -31,19 +31,5 @@ export class ForgotPasswordComponent implements OnInit {
     const data = {
       Email: this.email,
     };
-    this.cmnService.showLoader();
-    this.http
-      .post(environment.apiUrl + 'Account/forgotpassword', data, {
-        responseType: 'text',
-      })
-      .subscribe(
-        (res: any) => {
-          this.cmnService.showSuccess('Email sent successfully');
-          this.cmnService.hideLoader();
-        },
-        (err) => {
-          this.cmnService.hideLoader();
-        }
-      );
   }
 }

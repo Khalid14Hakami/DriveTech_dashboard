@@ -1,0 +1,72 @@
+<div>
+  <div class="p-3">
+    <mat-card>
+      <div class="row">
+        <div class="col-md-12"><h1>Alsafa Warehouse</h1></div>
+        <div class="col-md-6 py-2"><strong>Capacity :</strong> 188</div>
+        <div class="col-md-6 py-2">
+          <strong>Address:</strong>
+          <span class="font-clr px-2"
+            >8626 Abdallah Ai Sharbtli Ai-Safa,Jeddah 23454</span
+          >
+        </div>
+        <div class="col-md-12 py-2">
+          <strong>Storage Manager:</strong>Ahmed Ali
+        </div>
+        <div class="col-md-12 py-2">
+          <strong>Phone Number:</strong>+966 542348989
+        </div>
+        <div class="py-2">
+          <button mat-raised-button color="primary">
+            Import Cars from CSV Sheet
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="p-3">
+    <mat-card>
+      <div class="row">
+        <div class="col-md-12"><h1>Stored Vehicles</h1></div>
+        <div class="col-md-12">
+          <table
+            style="width: 100%"
+            mat-table
+            [dataSource]="dataSource"
+            class="border"
+          >
+            <!-- Position Column -->
+            <ng-container matColumnDef="vin">
+              <th mat-header-cell *matHeaderCellDef>VIN</th>
+              <td mat-cell *matCellDef="let element">{{ element.vin }}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="model">
+              <th mat-header-cell *matHeaderCellDef>Model</th>
+              <td mat-cell *matCellDef="let element">{{ element.model }}</td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="color">
+              <th mat-header-cell *matHeaderCellDef>Color</th>
+              <td mat-cell *matCellDef="let element">{{ element.color }}</td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="arrival_date">
+              <th mat-header-cell *matHeaderCellDef>Arrival Date</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.arrival_date }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

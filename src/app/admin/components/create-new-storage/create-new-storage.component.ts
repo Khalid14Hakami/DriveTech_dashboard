@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -9,15 +9,18 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/service/api-service/api.service';
+import { CmnServiceService } from 'src/app/service/cmn-service/cmn-service.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-create-new-storage',
   templateUrl: './create-new-storage.component.html',
   styleUrls: ['./create-new-storage.component.scss'],
 })
 export class CreateNewStorageComponent implements OnInit {
-  selectedCity = 'All';
-  selectedCountry = 'All';
-  constructor(private apiService: ApiService) {
+  constructor(
+    private apiService: ApiService,
+    private cmnService: CmnServiceService
+  ) {
     this.myForm = new FormGroup({
       name: new FormControl(null, [
         Validators.required,
@@ -25,7 +28,7 @@ export class CreateNewStorageComponent implements OnInit {
         Validators.maxLength(10),
       ]),
       proponent: new FormControl(null, [Validators.required]),
-      mobileNumber: new FormControl(null, [
+      phone: new FormControl(null, [
         Validators.required,
         Validators.pattern(/^\d{10}$/),
       ]),
@@ -38,21 +41,42 @@ export class CreateNewStorageComponent implements OnInit {
   }
   myForm!: FormGroup;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.onEditStorage();
+  }
 
   get form() {
     return this.myForm.controls;
   }
 
-  onSave() {
-    // check if the form is valid
+  onEditStorage() {
+    this.myForm.controls.name.setValue(this.apiService.storageForEdit.name);
+    this.myForm.controls.proponent.setValue(
+      this.apiService.storageForEdit.proponent
+    );
+    this.myForm.controls.phone.setValue(this.apiService.storageForEdit.Phone);
+    this.myForm.controls.capacity.setValue(
+      this.apiService.storageForEdit?.capacity
+    );
+    this.myForm.controls.address1.setValue(
+      this.apiService.storageForEdit.location
+    );
+    this.myForm.controls.address2.setValue(
+      this.apiService.storageForEdit?.address2
+    );
+    this.myForm.controls.country.setValue(
+      this.apiService.storageForEdit?.country
+    );
+    this.myForm.controls.city.setValue(this.apiService.storageForEdit?.city);
+  }
+
+  onCerateStorage() {
     if (this.myForm.valid) {
-      // log the form values to the console
       console.log(this.myForm.value);
       let postData = {
         name: this.myForm.get('name').value,
         proponent: this.myForm.get('proponent').value,
-        mobileNumber: this.myForm.get('mobileNumber').value,
+        phone: this.myForm.get('phone').value,
         capacity: this.myForm.get('capacity').value,
         address1: this.myForm.get('address1').value,
         address2: this.myForm.get('address2').value,
@@ -60,17 +84,21 @@ export class CreateNewStorageComponent implements OnInit {
         city: this.myForm.get('city').value,
       };
 
-      // show an alert to inform the user that the data was saved
-      alert('Your data was saved.');
+      this.cmnService.showLoader();
 
-      // reset the form to clear the values
-      this.myForm.reset();
+      this.apiService.createStorage(postData).subscribe(
+        (res: any) => {
+          alert('Your data was saved.');
+          this.myForm.reset();
+          this.cmnService.hideLoader();
+        },
+        (err) => {
+          this.cmnService.hideLoader();
+          console.log('err - ', err);
+        }
+      );
     } else {
-      // show an alert to inform the user that the data is incomplete
       alert('Please fill in all required fields before saving.');
     }
   }
-  // storData(postData: any): Observable<any> {
-  // return this.apiService.storageData('', postData);
-  // }
 }

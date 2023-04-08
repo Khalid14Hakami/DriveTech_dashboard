@@ -1,1 +1,110 @@
-<p>dashboard</p>
+<div class="p-3">
+  <mat-card>
+    <div class="row w-100 p-3 d-flex align-items-center">
+      <div class="col-md-12"><h1>Storage Summary:</h1></div>
+      <div class="col-md-8">
+        <table
+          style="width: 100%"
+          mat-table
+          [dataSource]="dataSource"
+          class="border"
+        >
+          <!-- Position Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="location">
+            <th mat-header-cell *matHeaderCellDef>Location</th>
+            <td mat-cell *matCellDef="let element">{{ element.location }}</td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="stored">
+            <th mat-header-cell *matHeaderCellDef>Stored</th>
+            <td mat-cell *matCellDef="let element">{{ element.stored }}</td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="available">
+            <th mat-header-cell *matHeaderCellDef>Available</th>
+            <td mat-cell *matCellDef="let element">{{ element.available }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+      <div class="col-md-4">
+        <canvas
+          class="chart"
+          baseChart
+          [data]="barChartData"
+          [options]="barChartOptions"
+          [type]="barChartType"
+        >
+        </canvas>
+
+        <!-- <div class="text-center fw-bold py-">Storege Capacity</div> -->
+      </div>
+    </div>
+  </mat-card>
+
+  <div class="pt-3">
+    <mat-card>
+      <div class="row w-100 p-3 d-flex align-items-center">
+        <div class="col-md-12"><h1>Maintanance Summary:</h1></div>
+        <div class="col-md-8">
+          <table
+            style="width: 100%"
+            mat-table
+            [dataSource]="newDataSource"
+            class="border"
+          >
+            <!-- Position Column -->
+            <ng-container matColumnDef="tasks">
+              <th mat-header-cell *matHeaderCellDef>Task</th>
+              <td mat-cell *matCellDef="let element">{{ element.tasks }}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="storage">
+              <th mat-header-cell *matHeaderCellDef>Storage</th>
+              <td mat-cell *matCellDef="let element">{{ element.storage }}</td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="done">
+              <th mat-header-cell *matHeaderCellDef>Done</th>
+              <td mat-cell *matCellDef="let element">{{ element.done }}</td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="progress">
+              <th mat-header-cell *matHeaderCellDef>Progress(%)</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.progress }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
+          </table>
+        </div>
+        <div class="col-md-4">
+          <canvas
+            baseChart
+            class="chart m-auto w-75"
+            [data]="pieChartData"
+            [type]="pieChartType"
+            [options]="pieChartOptions"
+          >
+          </canvas>
+          <!-- <div class="text-center py-3 fw-bold">Maintenance Progress</div> -->
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

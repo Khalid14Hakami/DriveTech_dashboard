@@ -11,9 +11,9 @@ import { ApiService } from 'src/app/service/api-service/api.service';
 })
 export class TaskManagementComponent implements OnInit {
   displayedColumns = ['name', 'type', 'repetition'];
+  routineColums = ['name', 'model'];
   dataSource = new Array();
   routineSourse = new Array();
-  routineColums = ['name', 'model'];
 
   constructor(private router: Router, private apiService: ApiService) {}
 
@@ -26,10 +26,12 @@ export class TaskManagementComponent implements OnInit {
     console.log('create new task');
     this.router.navigate(['admin/create-task']);
   }
-
+  onCreateNewRoutine() {
+    this.router.navigate(['admin/create-routine']);
+  }
   getTasks() {
     this.apiService.getTaskData().subscribe((res) => {
-      this.dataSource = res.Response;
+      this.dataSource = res;
       // console.log(this.dataSource, 'data source');
     });
   }

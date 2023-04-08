@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorInterceptor } from './interceptors/http-interceptor.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -16,23 +15,25 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+
 @NgModule({
   declarations: [AppComponent, LoginComponent, ForgotPasswordComponent],
   imports: [
-    GooglePlaceModule,
     BrowserModule,
     AppRoutingModule,
     MatFormFieldModule,
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    GooglePlaceModule,
+
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    MatTableModule,
   ],
   providers: [
     {
@@ -42,7 +43,7 @@ import { MatButtonModule } from '@angular/material/button';
     },
   ],
 
-  exports: [GooglePlaceModule],
+  exports: [],
 
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

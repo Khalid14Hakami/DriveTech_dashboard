@@ -30,13 +30,7 @@ export class AuthGuardGuard implements CanActivate {
     let currentUser = this.authService.currentUserValue;
 
     if (currentUser) {
-      // if(currentUser)
-      if (currentUser?.UserTypeId === UserType.BusinessAdmin) {
-        this.router.navigateByUrl('business');
-      }
-      if (currentUser?.UserTypeId === UserType.SuperAdmin) {
-        this.router.navigateByUrl('admin');
-      }
+      this.router.navigateByUrl('admin');
       return false;
     }
 

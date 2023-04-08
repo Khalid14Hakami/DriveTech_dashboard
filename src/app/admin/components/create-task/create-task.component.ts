@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormControlName,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { ApiService } from 'src/app/service/api-service/api.service';
+import { CmnServiceService } from 'src/app/service/cmn-service/cmn-service.service';
 
 @Component({
   selector: 'app-create-task',
@@ -8,12 +16,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class CreateTaskComponent implements OnInit {
   dataSource = new Array();
-  constructor() {}
+  // userFormData = new Object()
 
-  ngOnInit(): void {}
-  ngAfterViewInit() {
-    this.numEntered();
-  }
+  constructor(
+    private apiService: ApiService,
+    private cmnService: CmnServiceService
+  ) {}
+
   taskForm = new FormGroup({
     name: new FormControl('', Validators.required),
     repetition: new FormControl('', Validators.required),
@@ -21,12 +30,19 @@ export class CreateTaskComponent implements OnInit {
     num_of_attrib: new FormControl('', Validators.required),
     Picture: new FormControl('', Validators.required),
   });
+  ngOnInit(): void {}
 
-  // renderForm(): boolean {
-  //   return (
-  //     Object.keys(this.taskForm.controls).length === this.dataSource.length
-  //   );
-  // }
+  userFormData = {
+    name: this.taskForm.get('name').value,
+    repetition: this.taskForm.get('repetition').value,
+    type: this.taskForm.get('type'),
+    num_of_attrib: this.taskForm.get('num_of_attrib').value,
+    Picture: this.taskForm.get('Picture').value,
+  };
+
+  ngAfterViewInit() {
+    this.numEntered();
+  }
 
   numEntered() {
     this.taskForm
@@ -39,8 +55,12 @@ export class CreateTaskComponent implements OnInit {
               `num_of_attrib${i}`,
               new FormControl('', Validators.required)
             );
-            this.dataSource.push(i);
+            this.dataSource.push(i),
+              (this.userFormData[`num_of_attrib${i}`] = this.taskForm.get(
+                `num_of_attrib${i}`
+              ).value);
           }
+        } else {
         }
       });
   }
@@ -52,7 +72,19 @@ export class CreateTaskComponent implements OnInit {
   PictureControl = this.taskForm.get('Picture');
 
   onSubmit() {
-    console.log('value of form', this.taskForm.value);
-    // this.taskForm.reset();
+    this.cmnService.showLoader();
+    if (this.taskForm.valid) {
+      this.apiService.createTask(this.userFormData).subscribe((res: any) => {
+        alert('Taskdata saved successfully');
+        this.cmnService.hideLoader();
+      }),
+        (err: any) => {
+          this.cmnService.hideLoader();
+          console.log('err', err);
+        };
+      this.taskForm.reset();
+    } else {
+      alert('Please fill in all required fields before saving.');
+    }
   }
 }

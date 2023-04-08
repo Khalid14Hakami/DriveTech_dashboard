@@ -3,11 +3,18 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  googleMapUrl:
-    'https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyC4bHSoJxc7MdlddnpIkcv7dBt8DEpjDy0',
-  apiUrl: 'https://api.my-mano.com/api/',
-  imagePath: 'https://api.my-mano.com/images/collectibles/',
+  production: true,
+
+  firebaseConfig: {
+    apiKey: 'AIzaSyBI_9JGISNU2-qftsq4VeiGLaQMh8ienSE',
+    authDomain: 'drive-teck-admin.firebaseapp.com',
+    projectId: 'drive-teck-admin',
+    storageBucket: 'drive-teck-admin.appspot.com',
+    messagingSenderId: '290492173532',
+    appId: '1:290492173532:web:54f9e04b850e8815467819',
+  },
+
+  apiUrl: '',
 };
 
 /*
