@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormControlName,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api-service/api.service';
 import { CmnServiceService } from 'src/app/service/cmn-service/cmn-service.service';
 
@@ -16,29 +12,59 @@ import { CmnServiceService } from 'src/app/service/cmn-service/cmn-service.servi
 })
 export class CreateTaskComponent implements OnInit {
   dataSource = new Array();
-  // userFormData = new Object()
+  attribs = {};
+  taskList = ['any', 'dsfdsf', 'sdfsdf', 'sdfsdf', 'sfdsdf', 'sdfsdf'];
+  isEdit = false;
 
+  id: string;
+  taskForm: FormGroup;
+  nameControl: any;
+  repetitionControl: any;
+  typeControl: any;
+  num_of_attribControl: any;
+  PictureControl: any;
   constructor(
     private apiService: ApiService,
-    private cmnService: CmnServiceService
-  ) {}
+    private cmnService: CmnServiceService,
+    private toastr: ToastrService,
+    private aRoute: ActivatedRoute
+  ) {
+    this.id = this.aRoute.snapshot.params?.id;
+  }
 
-  taskForm = new FormGroup({
-    name: new FormControl('', Validators.required),
-    repetition: new FormControl('', Validators.required),
-    type: new FormControl('', Validators.required),
-    num_of_attrib: new FormControl('', Validators.required),
-    Picture: new FormControl('', Validators.required),
-  });
-  ngOnInit(): void {}
+  attrib_names = new FormGroup({});
 
-  userFormData = {
-    name: this.taskForm.get('name').value,
-    repetition: this.taskForm.get('repetition').value,
-    type: this.taskForm.get('type'),
-    num_of_attrib: this.taskForm.get('num_of_attrib').value,
-    Picture: this.taskForm.get('Picture').value,
-  };
+  ngOnInit(): void {
+    // this.getTaskData();
+
+    this.taskForm = new FormGroup({
+      name: new FormControl('', Validators.required),
+      frequency: new FormControl('', Validators.required),
+      type: new FormControl('', Validators.required),
+      num_of_attrib: new FormControl('', Validators.required),
+      // Picture: new FormControl('', Validators.required),
+    });
+    this.nameControl = this.taskForm.get('name');
+    this.repetitionControl = this.taskForm.get('frequency');
+    this.typeControl = this.taskForm.get('type');
+    this.num_of_attribControl = this.taskForm.get('num_of_attrib');
+    this.PictureControl = this.taskForm.get('Picture');
+
+    if (this.id) {
+      this.isEdit = true;
+
+      // get task detail of particular id here and set value
+
+      // this.apiService.getTaskData().subscribe((res) => {
+      //   this.nameControl.setValue(res[this.editId].name);
+      //   this.repetitionControl.setValue(res[this.editId].frequency);
+      //   this.typeControl.setValue(res[this.editId].type);
+      //   this.num_of_attribControl.setValue(res[this.editId].num_of_attrib);
+      // });
+    } else {
+      this.isEdit = false;
+    }
+  }
 
   ngAfterViewInit() {
     this.numEntered();
@@ -51,38 +77,52 @@ export class CreateTaskComponent implements OnInit {
         this.dataSource = new Array();
         if (res > 0) {
           for (let i = 1; i <= res; i++) {
-            this.taskForm.addControl(
-              `num_of_attrib${i}`,
+            this.attrib_names.addControl(
+              `attrib_name_${i}`,
               new FormControl('', Validators.required)
             );
-            this.dataSource.push(i),
-              (this.userFormData[`num_of_attrib${i}`] = this.taskForm.get(
-                `num_of_attrib${i}`
-              ).value);
+
+            this.dataSource.push(i);
           }
         } else {
         }
       });
   }
 
-  nameControl = this.taskForm.get('name');
-  repetitionControl = this.taskForm.get('repetition');
-  typeControl = this.taskForm.get('type');
-  num_of_attribControl = this.taskForm.get('num_of_attrib');
-  PictureControl = this.taskForm.get('Picture');
-
   onSubmit() {
     this.cmnService.showLoader();
     if (this.taskForm.valid) {
-      this.apiService.createTask(this.userFormData).subscribe((res: any) => {
-        alert('Taskdata saved successfully');
-        this.cmnService.hideLoader();
-      }),
-        (err: any) => {
-          this.cmnService.hideLoader();
-          console.log('err', err);
+      if (this.isEdit == true) {
+        let combined = {
+          ...this.taskForm.value,
+          attrib_names: { ...this.attrib_names.value },
         };
-      this.taskForm.reset();
+        this.apiService.editTaskData(combined, this.id).subscribe((res) => {
+          this.cmnService.hideLoader();
+          this.toastr.success('Taskdata saved successfully');
+        }),
+          (err: any) => {
+            this.cmnService.hideLoader();
+            this.toastr.error(err);
+            console.log('err', err);
+          };
+        // this.taskForm.reset();
+      } else {
+        let combined = {
+          ...this.taskForm.value,
+          attrib_names: { ...this.attrib_names.value },
+        };
+        this.apiService.createTask(combined).subscribe((res: any) => {
+          this.cmnService.hideLoader();
+          this.toastr.success('Taskdata saved successfully');
+        }),
+          (err: any) => {
+            this.cmnService.hideLoader();
+            this.toastr.error(err);
+            console.log('err', err);
+          };
+        // this.taskForm.reset();
+      }
     } else {
       alert('Please fill in all required fields before saving.');
     }

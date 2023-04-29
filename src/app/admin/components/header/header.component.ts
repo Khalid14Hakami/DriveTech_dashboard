@@ -17,11 +17,10 @@ import { CmnServiceService } from 'src/app/service/cmn-service/cmn-service.servi
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  isOpened = true;
   showLoader = false;
   businessDetail: any;
   @Output('toggle') buttonToggle = new EventEmitter();
-
-  isOpened = true;
 
   user: any;
   constructor(

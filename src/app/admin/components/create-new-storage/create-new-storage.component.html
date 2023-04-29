@@ -19,27 +19,14 @@
             />
           </mat-form-field>
           <div
-            *ngIf="form?.name?.touched && form?.name?.errors?.required"
+            *ngIf="nameControl?.invalid && nameControl?.touched"
             class="text-danger"
           >
             Name is required..
           </div>
-          <div
-            *ngIf="form?.name?.touched && form?.name?.errors?.minlength"
-            class="text-danger"
-          >
-            minLength is 6..
-          </div>
-          <div
-            *ngIf="form?.name?.touched && form?.name?.errors?.maxlength"
-            class="text-danger"
-          >
-            maxLength is 10..
-          </div>
         </div>
         <!-- warehouse name -->
         <div class="col-md-6">
-          <!-- <div class="py-2"><strong>Warehouse Proponet:</strong></div> -->
           <mat-form-field class="w-100" appearance="outline">
             <mat-label>Warehouse Proponet</mat-label>
             <input
@@ -50,9 +37,7 @@
             />
           </mat-form-field>
           <div
-            *ngIf="
-              form?.proponent?.touched && form?.proponent?.errors?.required
-            "
+            *ngIf="proponentControl?.invalid && proponentControl?.touched"
             class="text-danger"
           >
             proponent is required..
@@ -60,44 +45,37 @@
         </div>
         <!-- phnone number -->
         <div class="col-md-6">
-          <!-- <div class="py-2"><strong>Phone Number:</strong></div> -->
           <mat-form-field class="w-100" appearance="outline">
             <mat-label>Phone Number</mat-label>
             <input
-              formControlName="phone"
-              type="number"
+              formControlName="contact"
+              type="text"
               autofocus="false"
               matInput
               placeholder="Enter Phone Number"
             />
           </mat-form-field>
           <div
-            *ngIf="form?.phone?.touched && form?.phone?.errors?.required"
+            *ngIf="contactControl?.invalid && contactControl?.touched"
             class="text-danger"
           >
             Phone Number is required..
           </div>
-          <div
-            *ngIf="form?.phone?.touched && form?.phone?.errors?.pattern"
-            class="text-danger"
-          >
-            Write 10 digit number.
-          </div>
         </div>
         <!-- Capacity -->
         <div class="col-md-6">
-          <!-- <div class="py-2"><strong>Warehouse Capacity:</strong></div> -->
           <mat-form-field class="w-100" appearance="outline">
             <mat-label>Warehouse Capacity</mat-label>
             <input
               formControlName="capacity"
               autofocus="false"
               matInput
+              type="number"
               placeholder="Enter Warehouse Capacity"
             />
           </mat-form-field>
           <div
-            *ngIf="form?.capacity?.touched && form?.capacity?.errors?.required"
+            *ngIf="capacityControl?.invalid && capacityControl?.touched"
             class="text-danger"
           >
             Capacity is required..
@@ -105,85 +83,29 @@
         </div>
         <!-- address -->
 
-        <div class="col-md-6">
+        <div class="col-md-12">
           <mat-form-field class="w-100 p-0 m-0" appearance="outline">
-            <mat-label>Warehouse Address 1</mat-label>
-            <input
-              formControlName="address1"
+            <mat-label>Warehouse Address (Location)</mat-label>
+            <textarea
+              formControlName="location"
               autofocus="false"
               matInput
               placeholder="Enter Warehouse Address 1"
-            />
+            ></textarea>
           </mat-form-field>
           <div
-            *ngIf="form?.address1?.touched && form?.address1?.errors?.required"
+            *ngIf="locationControl?.invalid && locationControl?.touched"
             class="text-danger"
           >
             Address1 is required..
           </div>
         </div>
-        <!-- address line 1 -->
-        <!-- <div class="col-md-3 fw-bold">Address Line1:</div> -->
-        <div class="col-md-6">
-          <mat-form-field class="w-100 p-0 m-0" appearance="outline">
-            <mat-label>Warehouse Address 1</mat-label>
-            <input
-              formControlName="address2"
-              autofocus="false"
-              matInput
-              placeholder="Enter Warehouse Address 1"
-            />
-          </mat-form-field>
-          <div
-            *ngIf="form?.address2?.touched && form?.address2?.errors?.required"
-            class="text-danger"
-          >
-            Address2 is required..
-          </div>
-        </div>
-        <!-- address line 2 -->
-        <!-- <div class="col-md-3 fw-bold">Country:</div> -->
-        <div class="col-md-6">
-          <mat-form-field class="w-100 p-0 m-0" appearance="outline">
-            <mat-label>Country</mat-label>
-            <mat-select formControlName="country">
-              <mat-option value="All" selected>All</mat-option>
-              <mat-option value="India">India</mat-option>
-              <mat-option value="US">US</mat-option
-              ><mat-option value="Canada">Canada</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <div
-            *ngIf="form?.country?.touched && form?.country?.errors?.required"
-            class="text-danger"
-          >
-            Country is required..
-          </div>
-        </div>
-        <!-- Country -->
-        <!-- <div class="col-md-3 fw-bold">City:</div> -->
-        <div class="col-md-6">
-          <mat-form-field class="w-100" appearance="outline">
-            <mat-label>City</mat-label>
-            <mat-select formControlName="city">
-              <mat-option value="All">All</mat-option>
-              <mat-option value="India">India</mat-option>
-              <mat-option value="US">US</mat-option>
-              <mat-option value="Canada">Canada</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <div
-            *ngIf="form?.city?.touched && form?.city?.errors?.required"
-            class="text-danger"
-          >
-            City is required.
-          </div>
-        </div>
+
         <!-- city -->
         <div class="col-md-12 text-center">
-          <button color="primary" mat-raised-button (click)="onCerateStorage()">
+          <button color="primary" mat-raised-button (click)="onCreateStorage()">
             <!-- <mat-icon>save</mat-icon> -->
-            <span class="px-3">Save</span>
+            <span class="px-3">{{ isEdit ? "Update" : "Save" }}</span>
           </button>
         </div>
       </div>

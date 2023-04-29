@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -46,19 +46,24 @@ export class AuthServiceService {
   }
 
   login(userData: any): Observable<any> {
+    let myHeaders = new HttpHeaders().set(
+      'Authorization',
+      'Basic ' + btoa(userData?.email + ':' + userData?.password)
+    );
+
     return this.http
-      .post(environment.apiUrl + 'Account/business-signin', userData)
+      .get(environment.apiUrl + 'login', { headers: myHeaders })
       .pipe(
         map(
           (loginResponse: any) => {
-            //  if (loginResponse?.success) {
-            this.currentUserSubject.next(loginResponse);
-
-            localStorage.setItem(
-              'cupv_',
-              this.cmnService.encrypt(JSON.stringify(loginResponse))
-            );
-            //   }
+            if (loginResponse) {
+              loginResponse.username = userData?.email;
+              this.currentUserSubject.next(loginResponse);
+              localStorage.setItem(
+                'cupv_',
+                this.cmnService.encrypt(JSON.stringify(loginResponse))
+              );
+            }
             return loginResponse;
           },
           (err: any) => {
@@ -70,7 +75,7 @@ export class AuthServiceService {
 
   async logout() {
     this.currentUserSubject.next(null);
-    localStorage.removeItem('cupv_');
+    localStorage.clear();
     this.router.navigateByUrl('login');
   }
 }

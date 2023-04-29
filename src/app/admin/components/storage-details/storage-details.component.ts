@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/service/api-service/api.service';
 
 export interface PeriodicElement {
-  model: string;
-  vin: string;
+  car_id: number;
+  VIN: number;
   color: string;
-  arrival_date: number;
+  arraival_date: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [];
@@ -16,19 +17,20 @@ const ELEMENT_DATA: PeriodicElement[] = [];
   styleUrls: ['./storage-details.component.scss'],
 })
 export class StorageDetailsComponent implements OnInit {
-  displayedColumns: string[] = ['vin', 'model', 'color', 'arrival_date'];
+  id: string;
+  displayedColumns: string[] = ['VIN', 'car_id', 'color', 'arraival_date'];
   dataSource = [...ELEMENT_DATA];
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private aRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.id = this.aRoute.snapshot.params.id;
     this.storageDetail();
   }
 
   storageDetail() {
-    this.apiService.getStorageDetail().subscribe((res: any) => {
+    this.apiService.getVehiclesOfStorage(this.id).subscribe((res: any) => {
       this.dataSource = res;
-      console.log('Get User Detail', res);
     });
   }
 }

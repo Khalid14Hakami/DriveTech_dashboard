@@ -7,6 +7,7 @@ export const environment = {
 
   firebaseConfig: {
     apiKey: 'AIzaSyBI_9JGISNU2-qftsq4VeiGLaQMh8ienSE',
+
     authDomain: 'drive-teck-admin.firebaseapp.com',
     projectId: 'drive-teck-admin',
     storageBucket: 'drive-teck-admin.appspot.com',
@@ -14,7 +15,7 @@ export const environment = {
     appId: '1:290492173532:web:54f9e04b850e8815467819',
   },
 
-  apiUrl: '',
+  apiUrl: ' https://k14h.pythonanywhere.com/',
 };
 
 /*

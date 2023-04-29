@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api-service/api.service';
+import { CmnServiceService } from 'src/app/service/cmn-service/cmn-service.service';
 
 @Component({
   selector: 'app-user-management',
@@ -9,18 +10,27 @@ import { ApiService } from 'src/app/service/api-service/api.service';
 })
 export class UserManagementComponent implements OnInit {
   displayedColumns = ['name', 'role', 'status'];
-  dataSource = new Array();
+  dataSource = [];
 
-  constructor(private router: Router, private apiService: ApiService) {}
+  constructor(
+    private router: Router,
+    private apiService: ApiService,
+    private cmnService: CmnServiceService
+  ) {}
 
   ngOnInit(): void {
     this.getUserData();
   }
   getUserData() {
-    this.apiService.getUserData().subscribe((res) => {
+    this.cmnService.showLoader();
+    this.apiService.getUserData().subscribe((res: any[]) => {
       this.dataSource = res;
-      console.log(this.dataSource, 'user data');
+      this.cmnService.hideLoader();
     });
+
+    setTimeout(() => {
+      this.cmnService.hideLoader();
+    }, 3000);
   }
   createNewUser() {
     this.router.navigate(['admin/create-user']);

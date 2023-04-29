@@ -45,8 +45,7 @@ export class CreateUserComponent implements OnInit {
   onSubmitUser() {
     this.cmnService.showLoader();
     if (this.userForm.valid) {
-      console.log(this.userForm.value);
-      this.apiService.createUser(this.userData).subscribe((res) => {
+      this.apiService.createUser(this.userForm.value).subscribe((res) => {
         alert('User data saved successfully');
         this.userForm.reset();
         this.cmnService.hideLoader();

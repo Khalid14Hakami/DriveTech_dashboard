@@ -36,11 +36,23 @@ const routes: Routes = [
         component: CreateNewStorageComponent,
       },
       {
+        path: 'updateStorage/:id',
+        component: CreateNewStorageComponent,
+      },
+      {
+        path: 'storage-detail/:id',
+        component: CreateNewStorageComponent,
+      },
+      {
         path: 'task-management',
         component: TaskManagementComponent,
       },
       {
         path: 'create-task',
+        component: CreateTaskComponent,
+      },
+      {
+        path: 'update-task/:id',
         component: CreateTaskComponent,
       },
       {
@@ -52,11 +64,15 @@ const routes: Routes = [
         component: CreateUserComponent,
       },
       {
-        path: 'storageDetail',
+        path: 'storageDetail/:id',
         component: StorageDetailsComponent,
       },
       {
         path: 'create-routine',
+        component: CreateRoutineComponent,
+      },
+      {
+        path: 'update-routine/:id',
         component: CreateRoutineComponent,
       },
     ],

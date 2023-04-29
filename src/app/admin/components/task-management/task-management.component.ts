@@ -1,8 +1,8 @@
-import { newArray } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api-service/api.service';
+import { CmnServiceService } from 'src/app/service/cmn-service/cmn-service.service';
 
 @Component({
   selector: 'app-task-management',
@@ -10,36 +10,76 @@ import { ApiService } from 'src/app/service/api-service/api.service';
   styleUrls: ['./task-management.component.scss'],
 })
 export class TaskManagementComponent implements OnInit {
-  displayedColumns = ['name', 'type', 'repetition'];
-  routineColums = ['name', 'model'];
-  dataSource = new Array();
-  routineSourse = new Array();
+  displayedColumns = ['name', 'type', 'repetition', 'action'];
+  routineColums = ['name', 'model', 'action'];
+  taskData = [];
+  routinesData = [];
+  routineData: Object;
 
-  constructor(private router: Router, private apiService: ApiService) {}
+  constructor(
+    private router: Router,
+    private apiService: ApiService,
+    private toastr: ToastrService,
+    private cmnService: CmnServiceService
+  ) {}
 
   ngOnInit(): void {
     this.getTasks();
-    this.getRoutines();
   }
 
   onCreateNewTask() {
-    console.log('create new task');
     this.router.navigate(['admin/create-task']);
   }
   onCreateNewRoutine() {
     this.router.navigate(['admin/create-routine']);
   }
   getTasks() {
-    this.apiService.getTaskData().subscribe((res) => {
-      this.dataSource = res;
-      // console.log(this.dataSource, 'data source');
+    this.cmnService.showLoader();
+    this.apiService.getTaskData().subscribe((res: any) => {
+      this.taskData = res;
+      this.getRoutines();
+      this.cmnService.hideLoader();
     });
+    setTimeout(() => {
+      this.cmnService.hideLoader();
+    }, 1000);
+  }
+
+  onEditTask(data) {
+    this.router.navigate(['admin/update-task/' + data?.id]);
+  }
+  onRemoveTask(data) {
+    if (confirm('Are you sure?')) {
+      this.cmnService.showLoader();
+      this.apiService.removeTaskData(data?.id).subscribe((res) => {
+        this.cmnService.hideLoader();
+        this.toastr.success('Task deleted successfully');
+      });
+    }
   }
 
   getRoutines() {
-    this.apiService.getRoutinData().subscribe((res) => {
-      this.routineSourse = res.Response;
-      // console.log(this.routineSourse, 'routineSourse');
+    this.cmnService.showLoader();
+    this.apiService.getRoutinesData().subscribe((res: any) => {
+      this.routinesData = res;
+      this.cmnService.hideLoader();
     });
+  }
+  onEditRoutine(data) {
+    this.router.navigate(['admin/update-routine/' + data?.id]);
+  }
+  showRoutineDetail(data) {
+    this.cmnService.showLoader();
+    this.apiService.getRoutineData(data?.id).subscribe((res) => {
+      this.routineData = res;
+      this.cmnService.hideLoader();
+    });
+  }
+  onRemoveRoutine(data) {
+    if (confirm('Are you sure?')) {
+      this.apiService.removeRoutinData(data?.id).subscribe((res) => {
+        this.toastr.success('Routinedata deleted successfully');
+      });
+    }
   }
 }

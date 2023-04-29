@@ -16,16 +16,34 @@ import { catchError, retry, tap, timeout } from 'rxjs/operators';
 import { CmnServiceService } from '../service/cmn-service/cmn-service.service';
 
 import { environment } from 'src/environments/environment';
+import { AuthServiceService } from '../service/auth-service/auth-service.service';
 
 @Injectable()
 export class HttpInterceptorInterceptor implements HttpInterceptor {
-  constructor(private cmnService: CmnServiceService) {}
+  constructor(
+    private cmnService: CmnServiceService,
+    private authService: AuthServiceService
+  ) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    return next.handle(request).pipe(
+    console.log('interceptor called');
+    let req;
+    const currentUser = this.authService.currentUserValue;
+    if (currentUser && currentUser?.token) {
+      req = request.clone({
+        setHeaders: {
+          Authorization: `Basic ` + btoa(currentUser.username + ':' + '1234'),
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+    } else {
+      req = request;
+    }
+    return next.handle(req).pipe(
       tap((event: HttpEvent<any>) => {
         if (
           event instanceof HttpResponse &&

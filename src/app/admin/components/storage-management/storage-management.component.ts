@@ -4,11 +4,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateNewStorageComponent } from '../create-new-storage/create-new-storage.component';
 import { Route, Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api-service/api.service';
+import { ToastrService } from 'ngx-toastr';
+import { CmnServiceService } from 'src/app/service/cmn-service/cmn-service.service';
 
 export interface PeriodicElement {
   name: string;
   strg_id: number;
-  available: number;
+  contact: string;
   location: string;
   proponet: string;
 }
@@ -24,37 +26,54 @@ const ELEMENT_DATA = [];
 export class StorageManagementComponent implements OnInit {
   table: any;
   PeriodicElement: any;
+  displayedColumns: string[] = [
+    'name',
+    'location',
+    'strg_id',
+    'contact',
+    'proponet',
+    'action',
+  ];
+  dataSource = [...ELEMENT_DATA];
+
   constructor(
-    private dialog: MatDialog,
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private toastr: ToastrService,
+    private cmnService: CmnServiceService
   ) {}
 
   ngOnInit(): void {
     this.storageData();
   }
 
-  displayedColumns: string[] = [
-    'name',
-    'location',
-    'strg_id',
-    'available',
-    'proponet',
-    'action',
-  ];
-  dataSource = [...ELEMENT_DATA];
-
-  onEditData(element) {
-    this.apiService.onEditStorage(element);
-    this.router.navigate(['admin/createNewStorage']);
+  storageData() {
+    this.cmnService.showLoader();
+    this.apiService.getStorageData().subscribe((res: any) => {
+      this.dataSource = res;
+      this.cmnService.hideLoader();
+    });
   }
 
-  onRemoveData(index: any) {
-    console.log('Delete element:', index);
+  onEditData(data) {
+    this.router.navigate(['admin/updateStorage/' + data?.strg_id]);
+  }
 
+  onRemoveStorage(data) {
+    console.log(data);
     if (confirm('Are you sure?')) {
-      this.dataSource.splice(index, 1);
-      this.dataSource = [...this.dataSource];
+      this.cmnService.showLoader();
+      this.apiService.deleteStorage(data?.strg_id).subscribe(
+        (res) => {
+          this.toastr.success('Storage data deleted successfully');
+          this.storageData();
+          this.cmnService.hideLoader();
+        },
+        (err) => {
+          this.cmnService.hideLoader();
+          console.log(err);
+        }
+      );
     }
   }
 
@@ -62,15 +81,7 @@ export class StorageManagementComponent implements OnInit {
     this.router.navigate(['admin/createNewStorage']);
   }
 
-  storageData() {
-    this.apiService.getStorageData().subscribe((res: any) => {
-      this.dataSource = res;
-      console.log('Get Data', res);
-    });
-  }
-
   onStorageDetail(element) {
-    console.log(element);
-    this.router.navigate(['admin/storageDetail']);
+    this.router.navigate(['admin/storage-detail/' + element?.strg_id]);
   }
 }
