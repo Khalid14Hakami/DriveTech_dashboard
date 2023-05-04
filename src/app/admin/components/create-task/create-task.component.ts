@@ -13,7 +13,7 @@ import { CmnServiceService } from 'src/app/service/cmn-service/cmn-service.servi
 export class CreateTaskComponent implements OnInit {
   dataSource = new Array();
   attribs = {};
-  taskList = ['any', 'dsfdsf', 'sdfsdf', 'sdfsdf', 'sfdsdf', 'sdfsdf'];
+  taskList = ['measure', 'check'];
   isEdit = false;
 
   id: string;
@@ -41,7 +41,7 @@ export class CreateTaskComponent implements OnInit {
       name: new FormControl('', Validators.required),
       frequency: new FormControl('', Validators.required),
       type: new FormControl('', Validators.required),
-      num_of_attrib: new FormControl('', Validators.required),
+      num_of_attrib: new FormControl(''),
       // Picture: new FormControl('', Validators.required),
     });
     this.nameControl = this.taskForm.get('name');
@@ -49,6 +49,14 @@ export class CreateTaskComponent implements OnInit {
     this.typeControl = this.taskForm.get('type');
     this.num_of_attribControl = this.taskForm.get('num_of_attrib');
     this.PictureControl = this.taskForm.get('Picture');
+
+    this.taskForm.controls?.type.valueChanges.subscribe((type: string) => {
+      if (type == 'measure') {
+        this.taskForm.controls.type.setValidators([Validators.required]);
+      } else {
+        this.taskForm.controls.type.setValidators([]);
+      }
+    });
 
     if (this.id) {
       this.isEdit = true;

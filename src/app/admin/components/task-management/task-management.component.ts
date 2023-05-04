@@ -25,6 +25,7 @@ export class TaskManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTasks();
+    this.getRoutines();
   }
 
   onCreateNewTask() {
@@ -37,7 +38,7 @@ export class TaskManagementComponent implements OnInit {
     this.cmnService.showLoader();
     this.apiService.getTaskData().subscribe((res: any) => {
       this.taskData = res;
-      this.getRoutines();
+
       this.cmnService.hideLoader();
     });
     setTimeout(() => {

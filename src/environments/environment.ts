@@ -15,7 +15,7 @@ export const environment = {
     appId: '1:290492173532:web:54f9e04b850e8815467819',
   },
 
-  apiUrl: ' https://k14h.pythonanywhere.com/',
+  apiUrl: 'https://k14h.pythonanywhere.com/',
 };
 
 /*
