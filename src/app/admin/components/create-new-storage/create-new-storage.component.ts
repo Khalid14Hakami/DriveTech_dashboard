@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/service/api-service/api.service';
 import { CmnServiceService } from 'src/app/service/cmn-service/cmn-service.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-create-new-storage',
@@ -32,7 +32,8 @@ export class CreateNewStorageComponent implements OnInit {
     private apiService: ApiService,
     private cmnService: CmnServiceService,
     private toastr: ToastrService,
-    private aRoute: ActivatedRoute
+    private aRoute: ActivatedRoute,
+    private router: Router
   ) {
     this.id = this.aRoute.snapshot.params?.id;
   }
@@ -55,19 +56,18 @@ export class CreateNewStorageComponent implements OnInit {
     this.locationControl = this.myForm.get('location');
     if (this.id) {
       this.isEdit = true;
-      this.cmnService.showLoader();
-      this.apiService.getStorageDetailById(this.id).subscribe(
-        (res) => {
+
+      this.aRoute.queryParams.subscribe(
+        (res: any) => {
           console.log(res);
-          this.cmnService.hideLoader();
-          // this.nameControl.setValue(res[this.editId].name);
-          // this.proponentControl.setValue(res[this.editId].proponent);
-          // this.contactControl.setValue(res[this.editId].contact);
-          // this.capacityControl.setValue(res[this.editId].capacity);
-          // this.locationControl.setValue(res[this.editId].location);
+          this.nameControl.setValue(res?.name);
+          this.proponentControl.setValue(res?.proponent);
+          this.contactControl.setValue(res?.contact);
+          this.capacityControl.setValue(res?.capacity);
+          this.locationControl.setValue(res?.location);
         },
         (err) => {
-          this.cmnService.hideLoader();
+          console.log(err);
         }
       );
     } else {
@@ -83,16 +83,18 @@ export class CreateNewStorageComponent implements OnInit {
           ...{ strg_id: this.id },
           ...this.myForm.value,
         };
-        this.apiService.editStorage(data, this.id).subscribe((res) => {
-          this.cmnService.hideLoader();
-          this.myForm.reset();
-          this.toastr.success('Storage data saved successfully');
-        }),
+        this.apiService.editStorage(data, this.id).subscribe(
+          (res) => {
+            this.cmnService.hideLoader();
+            this.router.navigateByUrl('admin/storage-management');
+            this.toastr.success('Storage data updated successfully');
+          },
           (err: any) => {
             this.cmnService.hideLoader();
             this.toastr.error(err);
             console.log('err', err);
-          };
+          }
+        );
       } else {
         let data = {
           location: this.myForm.value?.location,
@@ -102,16 +104,18 @@ export class CreateNewStorageComponent implements OnInit {
           capacity: this.myForm?.value?.capacity,
         };
 
-        this.apiService.createStorage(data).subscribe((res: any) => {
-          this.myForm.reset();
-          this.cmnService.hideLoader();
-          this.toastr.success('Storage data saved successfully');
-        }),
+        this.apiService.createStorage(data).subscribe(
+          (res: any) => {
+            this.myForm.reset();
+            this.cmnService.hideLoader();
+            this.toastr.success('Storage data saved successfully');
+          },
           (err: any) => {
             this.cmnService.hideLoader();
-            this.toastr.error(err);
+            this.toastr.error(err?.error?.error);
             console.log('err', err);
-          };
+          }
+        );
       }
 
       // let postData = {

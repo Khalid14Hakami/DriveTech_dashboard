@@ -2,19 +2,21 @@
   <div class="p-3">
     <mat-card>
       <div class="row">
-        <div class="col-md-12"><h1>Alsafa Warehouse</h1></div>
-        <div class="col-md-6 py-2"><strong>Capacity :</strong> 188</div>
+        <div class="col-md-12">
+          <h1>{{ storage?.name }}</h1>
+        </div>
+        <div class="col-md-6 py-2">
+          <strong>Capacity :</strong> {{ storage?.capacity }}
+        </div>
         <div class="col-md-6 py-2">
           <strong>Address:</strong>
-          <span class="font-clr px-2"
-            >8626 Abdallah Ai Sharbtli Ai-Safa,Jeddah 23454</span
-          >
+          <span class="font-clr px-2">{{ storage?.location }}</span>
         </div>
         <div class="col-md-12 py-2">
           <strong>Storage Manager:</strong>Ahmed Ali
         </div>
         <div class="col-md-12 py-2">
-          <strong>Phone Number:</strong>+966 542348989
+          <strong>Phone Number:</strong>{{ storage?.contact }}
         </div>
         <div class="py-2">
           <button mat-raised-button color="primary">

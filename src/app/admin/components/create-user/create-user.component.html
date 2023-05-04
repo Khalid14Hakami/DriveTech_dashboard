@@ -13,7 +13,7 @@
           <div class="form-group col-md-6">
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>User Name:</mat-label>
-              <input matInput formControlName="name" />
+              <input matInput formControlName="username" />
             </mat-form-field>
             <div
               *ngIf="nameControl?.invalid && nameControl?.touched"
@@ -48,6 +48,18 @@
               *Please Enter Valid Phone Number
             </div>
           </div>
+          <div class="form-group col-md-6">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput formControlName="password" type="number" />
+            </mat-form-field>
+            <div
+              *ngIf="passwordControl?.invalid && passwordControl?.touched"
+              class="text-danger"
+            >
+              *Please Enter Password
+            </div>
+          </div>
 
           <div class="form-group col-md-6">
             <mat-form-field appearance="outline" class="w-100">
@@ -68,7 +80,14 @@
           <div class="form-group col-md-6">
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Storage</mat-label>
-              <input matInput formControlName="branch" type="branch" />
+
+              <mat-select formControlName="strg_id">
+                <mat-option
+                  *ngFor="let storage of storages"
+                  [value]="storage?.strg_id"
+                  >{{ storage?.name }}</mat-option
+                >
+              </mat-select>
             </mat-form-field>
             <div
               *ngIf="branchControl?.invalid && branchControl?.touched"

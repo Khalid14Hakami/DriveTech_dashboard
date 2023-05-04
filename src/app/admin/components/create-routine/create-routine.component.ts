@@ -18,6 +18,7 @@ export class CreateRoutineComponent implements OnInit {
   routine_idControl: any;
   modelControl: any;
   tasksControl: any;
+  tasks = [];
   id: string;
   constructor(
     private cmnService: CmnServiceService,
@@ -31,13 +32,16 @@ export class CreateRoutineComponent implements OnInit {
   ngOnInit(): void {
     this.routineForm = new FormGroup({
       name: new FormControl('', Validators.required),
-      rtn_id: new FormControl('', Validators.required),
       model: new FormControl('', Validators.required),
       tasks: new FormControl('', Validators.required),
     });
 
+    this.apiService.getTaskData().subscribe((tasks: any) => {
+      this.tasks = tasks;
+    });
+
     this.nameControl = this.routineForm.get('name');
-    this.routine_idControl = this.routineForm.get('rtn_id');
+
     this.modelControl = this.routineForm.get('model');
     this.tasksControl = this.routineForm.get('tasks');
 
@@ -53,9 +57,6 @@ export class CreateRoutineComponent implements OnInit {
     } else {
       this.isEdit = false;
     }
-
-    if (this.isEdit == true) {
-    }
   }
 
   onSubmitRoutine() {
@@ -64,31 +65,34 @@ export class CreateRoutineComponent implements OnInit {
       if ((this.isEdit = true)) {
         this.apiService
           .editRoutinData(this.routineForm.value, this.id)
-          .subscribe((res: any) => {
-            this.cmnService.hideLoader();
-            this.toastr.success('Taskdata updated successfully');
-            this.isEdit = false;
-          }),
-          (err: any) => {
-            this.cmnService.hideLoader();
-            this.toastr.error(err);
-            console.log('err', err);
-            this.isEdit = false;
-          };
+          .subscribe(
+            (res: any) => {
+              this.cmnService.hideLoader();
+              this.toastr.success('Taskdata updated successfully');
+              this.isEdit = false;
+            },
+            (err: any) => {
+              this.cmnService.hideLoader();
+              this.toastr.error(err);
+              console.log('err', err);
+              this.isEdit = false;
+            }
+          );
+
         this.routineForm.reset();
       } else {
-        this.apiService
-          .createRoutine(this.routineForm.value)
-          .subscribe((res: any) => {
+        this.apiService.createRoutine(this.routineForm.value).subscribe(
+          (res: any) => {
             this.cmnService.hideLoader();
             this.toastr.success('Taskdata saved successfully');
-          }),
+          },
           (err: any) => {
             this.cmnService.hideLoader();
             this.toastr.error(err);
             console.log('err', err);
-          };
-        this.routineForm.reset();
+          }
+        ),
+          this.routineForm.reset();
       }
     } else {
       alert('Please fill in all required fields before saving.');

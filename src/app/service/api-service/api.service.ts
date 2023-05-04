@@ -22,6 +22,7 @@ export class ApiService {
   getVehiclesOfStorage(id) {
     return this.http.get(environment.apiUrl + 'storage/' + id + '/vehicles');
   }
+
   createStorage(data) {
     return this.http.post(environment.apiUrl + 'storage', data);
   }
@@ -77,5 +78,9 @@ export class ApiService {
   }
   createUser(data) {
     return this.http.post(environment.apiUrl + 'user', data);
+  }
+
+  deleteUser(id) {
+    return this.http.delete(environment.apiUrl + 'user/' + id);
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateNewStorageComponent } from '../create-new-storage/create-new-storage.component';
-import { Route, Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api-service/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { CmnServiceService } from 'src/app/service/cmn-service/cmn-service.service';
@@ -49,14 +49,21 @@ export class StorageManagementComponent implements OnInit {
 
   storageData() {
     this.cmnService.showLoader();
-    this.apiService.getStorageData().subscribe((res: any) => {
-      this.dataSource = res;
-      this.cmnService.hideLoader();
-    });
+    this.apiService.getStorageData().subscribe(
+      (res: any) => {
+        this.dataSource = res;
+        this.cmnService.hideLoader();
+      },
+      (err) => {
+        this.cmnService.hideLoader();
+      }
+    );
   }
 
   onEditData(data) {
-    this.router.navigate(['admin/updateStorage/' + data?.strg_id]);
+    this.router.navigate(['admin/updateStorage/' + data?.strg_id], {
+      queryParams: data,
+    });
   }
 
   onRemoveStorage(data) {
@@ -82,6 +89,8 @@ export class StorageManagementComponent implements OnInit {
   }
 
   onStorageDetail(element) {
-    this.router.navigate(['admin/storage-detail/' + element?.strg_id]);
+    this.router.navigate(['admin/storageDetail/' + element?.strg_id], {
+      queryParams: element,
+    });
   }
 }

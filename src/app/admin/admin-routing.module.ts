@@ -64,6 +64,10 @@ const routes: Routes = [
         component: CreateUserComponent,
       },
       {
+        path: 'update-user',
+        component: CreateUserComponent,
+      },
+      {
         path: 'storageDetail/:id',
         component: StorageDetailsComponent,
       },
