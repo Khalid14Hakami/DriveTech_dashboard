@@ -10,11 +10,11 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA1: PeriodicElement[] = [
-  { location: 'Ahmedabad', name: 'Hydrogen', stored: 65, available: 10 },
-  { location: 'Surt', name: 'Helium', stored: 70, available: 15 },
-  { location: 'Vadodra', name: 'Lithium', stored: 80, available: 20 },
-  { location: 'Rajkot', name: 'Beryllium', stored: 85, available: 25 },
-  { location: 'Gandhinagar', name: 'Boron', stored: 90, available: 30 },
+  { location: 'Jeddah', name: 'Alsafa Warehouse', stored: 65, available: 10 },
+  { location: 'Riyadh', name: 'Laban Warehouse', stored: 70, available: 15 },
+  { location: 'Makkah', name: 'Alzaidy Warehouse', stored: 80, available: 20 },
+  { location: 'Dammam', name: 'Alyarmok Warehouse', stored: 85, available: 25 },
+  { location: 'Khobar', name: 'ALulaia Warehouse', stored: 90, available: 30 },
 ];
 
 export interface PeriodicElement1 {
@@ -66,15 +66,16 @@ export class DashboardComponent implements OnInit {
       legend: { display: true, position: 'bottom' },
     },
   };
-  public barChartLabels: string[] = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+  
+  public barChartLabels: string[] = ['Alsafa ', 'Laban ', 'Alzaidy', 'Alyarmok', 'ALulaia' ];
   public barChartType: ChartType = 'bar';
 
   public barChartData: ChartData<'bar'> = {
-    labels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+    labels: ['Alsafa ', 'Laban ', 'Alzaidy', 'Alyarmok', 'ALulaia', ],
     datasets: [
       {
-        data: [5, 2, 4, 7, 6, 2, 8],
-        label: 'Storage Capacity',
+        data: [50, 20, 40, 70, 60, 20, 80],
+        label: 'Storage Utilization (%)',
         backgroundColor: '#67D9C0',
       },
     ],
