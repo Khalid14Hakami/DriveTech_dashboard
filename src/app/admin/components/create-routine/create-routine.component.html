@@ -7,7 +7,9 @@
         (ngSubmit)="onSubmitRoutine()"
       >
         <div class="container" class="d-flex">
-          <h1 class="mt-3 fw-bolder col-md-12">Create Routine</h1>
+          <h1 class="mt-3 fw-bolder col-md-12">
+            {{ id ? "Update " : "Create " }}Routine
+          </h1>
         </div>
         <div class="row">
           <div class="form-group col-md-6">
@@ -43,9 +45,11 @@
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Tasks</mat-label>
               <mat-select formControlName="tasks" multiple>
-                <mat-option *ngFor="let task of tasks" [value]="task?.id">{{
-                  task?.name
-                }}</mat-option>
+                <mat-option
+                  *ngFor="let task of tasks"
+                  [value]="task?.task_id"
+                  >{{ task?.name }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
             <div

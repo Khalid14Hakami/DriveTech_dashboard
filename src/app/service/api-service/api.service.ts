@@ -47,7 +47,7 @@ export class ApiService {
     return this.http.get(environment.apiUrl + 'routine/' + id);
   }
   editRoutinData(data, id) {
-    return this.http.put(environment.apiUrl + 'routine/', id, data);
+    return this.http.put(environment.apiUrl + 'routine/' + id, data);
   }
 
   removeRoutinData(id) {

@@ -36,7 +36,9 @@ export class StorageDetailsComponent implements OnInit {
       (res: any) => {
         console.log(res);
         this.storage = res;
+        this.storageDetail();
       },
+
       (err) => {
         console.log(err);
       }

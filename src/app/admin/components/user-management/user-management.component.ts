@@ -51,7 +51,7 @@ export class UserManagementComponent implements OnInit {
       return;
     }
     this.cmnService.showLoader();
-    this.apiService.deleteUser(data?.id).subscribe(
+    this.apiService.deleteUser(data?.user_id).subscribe(
       (res: any) => {
         this.cmnService.hideLoader();
         this.cmnService.showSuccess('User Deleted Successfully.');

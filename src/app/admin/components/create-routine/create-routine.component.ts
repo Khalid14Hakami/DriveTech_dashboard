@@ -26,7 +26,8 @@ export class CreateRoutineComponent implements OnInit {
     private toastr: ToastrService,
     private aRoute: ActivatedRoute
   ) {
-    this.id = this.aRoute.snapshot.queryParams?.id;
+    // this.id = this.aRoute.snapshot.queryParams?.id;
+    // console.log(this.id);
   }
 
   ngOnInit(): void {
@@ -45,30 +46,30 @@ export class CreateRoutineComponent implements OnInit {
     this.modelControl = this.routineForm.get('model');
     this.tasksControl = this.routineForm.get('tasks');
 
-    if (this.id) {
-      this.isEdit = true;
-
-      // this.apiService.getRoutinesData().subscribe((res) => {
-      //   this.nameControl.setValue(res[this.editId].name);
-      //   this.routine_idControl.setValue(res[this.editId].rtn_id);
-      //   this.modelControl.setValue(res[this.editId].model);
-      //   this.tasksControl.setValue(res[this.editId].tasks);
-      // });
-    } else {
-      this.isEdit = false;
-    }
+    this.aRoute.queryParams.subscribe((res: any) => {
+      if (res?.rtn_id) {
+        this.isEdit = true;
+        this.id = res?.rtn_id;
+        console.log('routines:- ', res);
+        this.nameControl.setValue(res?.name);
+        this.modelControl.setValue(res?.model);
+        this.tasksControl.setValue(res?.tasks);
+      } else {
+        this.isEdit = false;
+      }
+    });
   }
 
   onSubmitRoutine() {
     this.cmnService.showLoader();
     if (this.routineForm.valid) {
-      if ((this.isEdit = true)) {
+      if (this.id) {
         this.apiService
           .editRoutinData(this.routineForm.value, this.id)
           .subscribe(
             (res: any) => {
               this.cmnService.hideLoader();
-              this.toastr.success('Taskdata updated successfully');
+              this.toastr.success('Routine updated successfully');
               this.isEdit = false;
             },
             (err: any) => {
@@ -81,18 +82,19 @@ export class CreateRoutineComponent implements OnInit {
 
         this.routineForm.reset();
       } else {
+        console.log('routine :-', this.routineForm.value);
         this.apiService.createRoutine(this.routineForm.value).subscribe(
           (res: any) => {
             this.cmnService.hideLoader();
-            this.toastr.success('Taskdata saved successfully');
+            this.toastr.success('Routine saved successfully');
+            this.routineForm.reset();
           },
           (err: any) => {
             this.cmnService.hideLoader();
             this.toastr.error(err);
             console.log('err', err);
           }
-        ),
-          this.routineForm.reset();
+        );
       }
     } else {
       alert('Please fill in all required fields before saving.');

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api-service/api.service';
 import { CmnServiceService } from 'src/app/service/cmn-service/cmn-service.service';
@@ -23,11 +23,13 @@ export class CreateTaskComponent implements OnInit {
   typeControl: any;
   num_of_attribControl: any;
   PictureControl: any;
+  taskDetail: any;
   constructor(
     private apiService: ApiService,
     private cmnService: CmnServiceService,
     private toastr: ToastrService,
-    private aRoute: ActivatedRoute
+    private aRoute: ActivatedRoute,
+    private router: Router
   ) {
     this.id = this.aRoute.snapshot.params?.id;
   }
@@ -42,13 +44,47 @@ export class CreateTaskComponent implements OnInit {
       frequency: new FormControl('', Validators.required),
       type: new FormControl('', Validators.required),
       num_of_attrib: new FormControl(''),
-      // Picture: new FormControl('', Validators.required),
+      req_image: new FormControl('', Validators.required),
     });
     this.nameControl = this.taskForm.get('name');
     this.repetitionControl = this.taskForm.get('frequency');
     this.typeControl = this.taskForm.get('type');
     this.num_of_attribControl = this.taskForm.get('num_of_attrib');
-    this.PictureControl = this.taskForm.get('Picture');
+    this.PictureControl = this.taskForm.get('req_image');
+
+    this.aRoute.queryParams.subscribe((res: any) => {
+      this.taskDetail = res;
+      console.log('Task detail :- ', this.taskDetail);
+      this.nameControl.setValue(res?.name);
+      this.repetitionControl.setValue(res?.frequency);
+      this.typeControl.setValue(res?.type);
+      this.num_of_attribControl.setValue(res?.num_of_attrib);
+      this.PictureControl.setValue(res?.req_image == '1');
+      if (Number(res?.num_of_attrib) > 0) {
+        for (let i = 1; i <= Number(res?.num_of_attrib); i++) {
+          let attributeNames = this.taskDetail?.attrib_names.replace(/'/g, '"');
+
+          if (this.id) {
+            this.attrib_names.addControl(
+              `attrib_name_${i}`,
+              new FormControl(
+                JSON.parse(attributeNames)[`attrib_name_${i}`],
+                Validators.required
+              )
+            );
+          } else {
+            this.attrib_names.addControl(
+              `attrib_name_${i}`,
+              new FormControl('', Validators.required)
+            );
+          }
+
+          this.dataSource.push(i);
+        }
+      } else {
+      }
+      this.numEntered();
+    });
 
     this.taskForm.controls?.type.valueChanges.subscribe((type: string) => {
       if (type == 'measure') {
@@ -85,10 +121,20 @@ export class CreateTaskComponent implements OnInit {
         this.dataSource = new Array();
         if (res > 0) {
           for (let i = 1; i <= res; i++) {
-            this.attrib_names.addControl(
-              `attrib_name_${i}`,
-              new FormControl('', Validators.required)
-            );
+            if (this.id) {
+              this.attrib_names.addControl(
+                `attrib_name_${i}`,
+                new FormControl(
+                  this.taskDetail?.attrib_names[`attrib_name_${i}`],
+                  Validators.required
+                )
+              );
+            } else {
+              this.attrib_names.addControl(
+                `attrib_name_${i}`,
+                new FormControl('', Validators.required)
+              );
+            }
 
             this.dataSource.push(i);
           }
@@ -107,7 +153,8 @@ export class CreateTaskComponent implements OnInit {
         };
         this.apiService.editTaskData(combined, this.id).subscribe((res) => {
           this.cmnService.hideLoader();
-          this.toastr.success('Taskdata saved successfully');
+          this.router.navigateByUrl('admin/task-management');
+          this.toastr.success('Task saved successfully');
         }),
           (err: any) => {
             this.cmnService.hideLoader();
@@ -120,16 +167,17 @@ export class CreateTaskComponent implements OnInit {
           ...this.taskForm.value,
           attrib_names: { ...this.attrib_names.value },
         };
+        console.log('Task :- ', combined);
         this.apiService.createTask(combined).subscribe((res: any) => {
           this.cmnService.hideLoader();
-          this.toastr.success('Taskdata saved successfully');
+          this.toastr.success('Task added successfully');
+          this.taskForm.reset();
         }),
           (err: any) => {
             this.cmnService.hideLoader();
             this.toastr.error(err);
             console.log('err', err);
           };
-        // this.taskForm.reset();
       }
     } else {
       alert('Please fill in all required fields before saving.');

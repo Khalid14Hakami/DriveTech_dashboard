@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api-service/api.service';
 import { CmnServiceService } from 'src/app/service/cmn-service/cmn-service.service';
 
@@ -24,7 +25,8 @@ export class CreateUserComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private cmnService: CmnServiceService,
-    private aRoute: ActivatedRoute
+    private aRoute: ActivatedRoute,
+    private toster: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -73,7 +75,7 @@ export class CreateUserComponent implements OnInit {
     this.cmnService.showLoader();
     if (this.userForm.valid) {
       this.apiService.createUser(this.userForm.value).subscribe((res) => {
-        alert('User data saved successfully');
+        this.toster.success('User data saved successfully');
         this.userForm.reset();
         this.cmnService.hideLoader();
       }),
@@ -82,7 +84,7 @@ export class CreateUserComponent implements OnInit {
           console.log('err', err);
         };
     } else {
-      alert('Please fill in all required fields before saving.');
+      this.toster.warning('Please fill in all required fields before saving.');
     }
   }
 }
